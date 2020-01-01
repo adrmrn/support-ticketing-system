@@ -1,0 +1,36 @@
+ip: 192.168.45.45
+memory: 4096
+cpus: 2
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    - map: "../services/auth"
+      to: /home/vagrant/support-ticketing-system/auth
+    - map: "../services/notification"
+      to: /home/vagrant/support-ticketing-system/notification
+    - map: "../services/ticket"
+      to: /home/vagrant/support-ticketing-system/ticket
+    - map: "../services/user"
+      to: /home/vagrant/support-ticketing-system/user
+sites:
+    - map: auth.sts.app
+      to: /home/vagrant/support-ticketing-system/auth
+    - map: notification.sts.app
+      to: /home/vagrant/support-ticketing-system/notification
+    - map: ticket.sts.app
+      to: /home/vagrant/support-ticketing-system/ticket/public
+    - map: user.sts.app
+      to: /home/vagrant/support-ticketing-system/user
+databases:
+    - auth
+    - notification
+    - ticket
+    - user
+features:
+    - mariadb: false
+    - ohmyzsh: false
+    - webdriver: false
+name: support-ticketing-system
+hostname: support-ticketing-system
