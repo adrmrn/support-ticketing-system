@@ -1,0 +1,3 @@
+#index:
+#    path: /
+#    controller: Ticket\Shared\Infrastructure\Controller\DefaultController::index
