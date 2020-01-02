@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ticket\Tests\Domain\Ticket;
 
 use PHPUnit\Framework\TestCase;
+use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketMother;
 
 class TicketTest extends TestCase
@@ -18,5 +19,12 @@ class TicketTest extends TestCase
 
         // act
         $ticket->close();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        FakeCalendar::destroy();
     }
 }
