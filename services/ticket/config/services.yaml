@@ -19,6 +19,10 @@ services:
 
     ########## INFRASTRUCTURE ##########
 
+    Ticket\Infrastructure\Event\EventListener\Symfony\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
     Ticket\Infrastructure\Delivery\Api\Controller\CategoryController:
         public: true
 

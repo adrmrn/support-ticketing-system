@@ -6,7 +6,9 @@ namespace Ticket\Infrastructure\Delivery\Api\Controller;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Ticket\Application\Exception\ValidationException;
 use Ticket\Application\UseCase\CreateCategory\CreateCategoryCommand;
+use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateCategoryValidator;
 
 class CategoryController
 {
@@ -19,8 +21,13 @@ class CategoryController
 
     public function createCategory(Request $request): JsonResponse
     {
+        $validator = new CreateCategoryValidator($request->request->all());
+        if (!$validator->isValid()) {
+            throw ValidationException::withErrors($validator->errors());
+        }
+
         $command = new CreateCategoryCommand(
-            $request->get('name') ?? ''
+            $request->get('name')
         );
         $this->commandBus->handle($command);
 
