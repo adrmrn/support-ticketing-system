@@ -3,6 +3,11 @@ createCategory:
     methods: POST
     controller: Ticket\Infrastructure\Delivery\Api\Controller\CategoryController::createCategory
 
+editCategory:
+    path: /api/category/{categoryId}
+    methods: PUT
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\CategoryController::editCategory
+
 createTicket:
     path: /api/ticket
     methods: POST

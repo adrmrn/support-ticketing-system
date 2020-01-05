@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Ticket\Application\Exception\ValidationException;
 use Ticket\Application\UseCase\CreateCategory\CreateCategoryCommand;
+use Ticket\Application\UseCase\EditCategory\EditCategoryCommand;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateCategoryValidator;
+use Ticket\Infrastructure\Delivery\Api\Request\Validator\EditCategoryValidator;
 
 class CategoryController
 {
@@ -27,6 +29,24 @@ class CategoryController
         }
 
         $command = new CreateCategoryCommand(
+            $request->get('name')
+        );
+        $this->commandBus->handle($command);
+
+        return new JsonResponse(null, 201);
+    }
+
+    public function editCategory(string $categoryId, Request $request): JsonResponse
+    {
+        $data = $request->request->all();
+        $data['id'] = $categoryId;
+        $validator = new EditCategoryValidator($data);
+        if (!$validator->isValid()) {
+            throw ValidationException::withErrors($validator->errors());
+        }
+
+        $command = new EditCategoryCommand(
+            $categoryId,
             $request->get('name')
         );
         $this->commandBus->handle($command);
