@@ -7,6 +7,8 @@ use Ticket\Domain\Category\CategoryId;
 use Ticket\Domain\Comment\Comment;
 use Ticket\Domain\Comment\CommentContent;
 use Ticket\Domain\Comment\CommentId;
+use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
+use Ticket\Domain\Exception\ResolvedTicketCannotBeClosed;
 use Ticket\Domain\User\UserId;
 use Ticket\Shared\Domain\Calendar;
 
@@ -38,12 +40,12 @@ class Ticket
 
     /**
      * @param TicketTitle $title
-     * @throws \InvalidArgumentException
+     * @throws LockedTicketCannotBeChanged
      */
     public function changeTitle(TicketTitle $title): void
     {
-        if (!$this->status->equals(TicketStatus::open())) {
-            throw new \InvalidArgumentException('Title cannot be changed. Ticket is closed.');
+        if (!$this->status()->equals(TicketStatus::open())) {
+            throw LockedTicketCannotBeChanged::withTicketId($this->id());
         }
 
         $this->title = $title;
@@ -51,12 +53,12 @@ class Ticket
 
     /**
      * @param TicketDescription $description
-     * @throws \InvalidArgumentException
+     * @throws LockedTicketCannotBeChanged
      */
     public function describe(TicketDescription $description): void
     {
-        if (!$this->status->equals(TicketStatus::open())) {
-            throw new \InvalidArgumentException('Description cannot be changed. Ticket is closed.');
+        if (!$this->status()->equals(TicketStatus::open())) {
+            throw LockedTicketCannotBeChanged::withTicketId($this->id());
         }
 
         $this->description = $description;
@@ -68,12 +70,12 @@ class Ticket
     }
 
     /**
-     * @throws \InvalidArgumentException
+     * @throws ResolvedTicketCannotBeClosed
      */
     public function close(): void
     {
-        if ($this->status->equals(TicketStatus::resolved())) {
-            throw new \InvalidArgumentException('Cannot close resolved ticket.');
+        if ($this->status()->equals(TicketStatus::resolved())) {
+            throw ResolvedTicketCannotBeClosed::withTicketId($this->id());
         }
 
         $this->status = TicketStatus::closed();
@@ -84,12 +86,12 @@ class Ticket
      * @param CommentContent $content
      * @param UserId $authorId
      * @return Comment
-     * @throws \InvalidArgumentException
+     * @throws LockedTicketCannotBeChanged
      */
     public function addComment(CommentId $commentId, CommentContent $content, UserId $authorId): Comment
     {
-        if (!$this->status->equals(TicketStatus::open())) {
-            throw new \InvalidArgumentException('Comment cannot be added. Ticket is closed.');
+        if (!$this->status()->equals(TicketStatus::open())) {
+            throw LockedTicketCannotBeChanged::withTicketId($this->id());
         }
 
         return new Comment(

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Ticket\Tests\Domain\Ticket;
 
 use PHPUnit\Framework\TestCase;
+use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
+use Ticket\Domain\Exception\ResolvedTicketCannotBeClosed;
 use Ticket\Domain\Ticket\TicketStatus;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\DateTimeMother;
@@ -56,7 +58,7 @@ class TicketTest extends TestCase
         $ticket = TicketMother::createResolved();
 
         // assert
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(ResolvedTicketCannotBeClosed::class);
 
         // act
         $ticket->close();
@@ -83,7 +85,7 @@ class TicketTest extends TestCase
         $newTitle = TicketTitleMother::createDefault();
 
         // assert
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(LockedTicketCannotBeChanged::class);
 
         // act
         $ticket->changeTitle($newTitle);
@@ -96,7 +98,7 @@ class TicketTest extends TestCase
         $newTitle = TicketTitleMother::createDefault();
 
         // assert
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(LockedTicketCannotBeChanged::class);
 
         // act
         $ticket->changeTitle($newTitle);
@@ -123,7 +125,7 @@ class TicketTest extends TestCase
         $newDescription = TicketDescriptionMother::createDefault();
 
         // assert
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(LockedTicketCannotBeChanged::class);
 
         // act
         $ticket->describe($newDescription);
@@ -136,7 +138,7 @@ class TicketTest extends TestCase
         $newDescription = TicketDescriptionMother::createDefault();
 
         // assert
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(LockedTicketCannotBeChanged::class);
 
         // act
         $ticket->describe($newDescription);
@@ -162,7 +164,7 @@ class TicketTest extends TestCase
         $ticket = TicketMother::createClosed();
 
         // assert
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(LockedTicketCannotBeChanged::class);
 
         // act
         $ticket->addComment(
@@ -178,7 +180,7 @@ class TicketTest extends TestCase
         $ticket = TicketMother::createResolved();
 
         // assert
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(LockedTicketCannotBeChanged::class);
 
         // act
         $ticket->addComment(
