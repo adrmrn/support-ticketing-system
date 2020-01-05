@@ -17,11 +17,84 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    # App\Controller\:
-    #     resource: '../src/Controller'
-    #     tags: ['controller.service_arguments']
+    ########## INFRASTRUCTURE ##########
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    Ticket\Infrastructure\Delivery\Api\Controller\CategoryController:
+        public: true
+
+    ########## DOMAIN ##########
+
+    Ticket\Domain\Category\CategoryRepository:
+        class: Ticket\Infrastructure\Domain\Category\DoctrineCategoryRepository
+
+    Ticket\Domain\Ticket\TicketRepository:
+        class: Ticket\Infrastructure\Domain\Ticket\DoctrineTicketRepository
+
+    Ticket\Domain\Comment\CommentRepository:
+        class: Ticket\Infrastructure\Domain\Comment\DoctrineCommentRepository
+
+    ########## APPLICATION ##########
+
+    Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler:
+        class: Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\CreateCategory\CreateCategoryCommand
+            }
+
+    Ticket\Application\UseCase\EditCategory\EditCategoryHandler:
+        class: Ticket\Application\UseCase\EditCategory\EditCategoryHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\EditCategory\EditCategoryCommand
+            }
+
+    Ticket\Application\UseCase\CreateTicket\CreateTicketHandler:
+        class: Ticket\Application\UseCase\CreateTicket\CreateTicketHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\CreateTicket\CreateTicketCommand
+            }
+
+    Ticket\Application\UseCase\EditTicket\EditTicketHandler:
+        class: Ticket\Application\UseCase\EditTicket\EditTicketHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\EditTicket\EditTicketCommand
+            }
+
+    Ticket\Application\UseCase\CloseTicket\CloseTicketHandler:
+        class: Ticket\Application\UseCase\CloseTicket\CloseTicketHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\CloseTicket\CloseTicketCommand
+            }
+
+    Ticket\Application\UseCase\ResolveTicket\ResolveTicketHandler:
+        class: Ticket\Application\UseCase\ResolveTicket\ResolveTicketHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\ResolveTicket\ResolveTicketCommand
+            }
+
+    Ticket\Application\UseCase\AddComment\AddCommentHandler:
+        class: Ticket\Application\UseCase\AddComment\AddCommentHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\AddComment\AddCommentCommand
+            }
+
+    Ticket\Application\UseCase\EditComment\EditCommentHandler:
+        class: Ticket\Application\UseCase\EditComment\EditCommentHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\EditComment\EditCommentCommand
+            }

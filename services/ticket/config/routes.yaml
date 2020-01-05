@@ -1,3 +1,14 @@
-#index:
-#    path: /
-#    controller: Ticket\Shared\Infrastructure\Controller\DefaultController::index
+createCategory:
+    path: /api/category
+    methods: POST
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\CategoryController::createCategory
+
+createTicket:
+    path: /api/ticket
+    methods: POST
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::createTicket
+
+addComment:
+    path: /api/comment
+    methods: POST
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\CommentController::addComment
