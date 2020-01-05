@@ -158,6 +158,46 @@ class TicketTest extends TestCase
         $this->assertEquals($expectedNewDescription, $newDescription);
     }
 
+    public function testChangeCategory_TicketIsClosedAndCategoryCannotBeChanged_ThrownException(): void
+    {
+        // arrange
+        $ticket = TicketMother::createClosed();
+        $newCategory = CategoryIdMother::createDefault();
+
+        // assert
+        $this->expectException(LockedTicketCannotBeChanged::class);
+
+        // act
+        $ticket->changeCategory($newCategory);
+    }
+
+    public function testChangeCategory_TicketIsResolvedAndCategoryCannotBeChanged_ThrownException(): void
+    {
+        // arrange
+        $ticket = TicketMother::createResolved();
+        $newCategory = CategoryIdMother::createDefault();
+
+        // assert
+        $this->expectException(LockedTicketCannotBeChanged::class);
+
+        // act
+        $ticket->changeCategory($newCategory);
+    }
+
+    public function testChangeCategory_HaveNewCategoryAndTicketIsOpen_CategoryHasBeenChanged(): void
+    {
+        // arrange
+        $ticket = TicketMother::createDefault();
+        $expectedNewCategory = CategoryIdMother::createDefault('ID-CATEGORY-0');
+
+        // act
+        $ticket->changeCategory($expectedNewCategory);
+        $newCategory = $ticket->categoryId();
+
+        // assert
+        $this->assertEquals($expectedNewCategory, $newCategory);
+    }
+
     public function testAddComment_TicketIsClosedAndCommentCannotBeAdded_ThrownException(): void
     {
         // arrange

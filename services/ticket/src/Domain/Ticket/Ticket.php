@@ -64,6 +64,15 @@ class Ticket
         $this->description = $description;
     }
 
+    public function changeCategory(CategoryId $categoryId): void
+    {
+        if (!$this->status()->equals(TicketStatus::open())) {
+            throw LockedTicketCannotBeChanged::withTicketId($this->id());
+        }
+
+        $this->categoryId = $categoryId;
+    }
+
     public function resolve(): void
     {
         $this->status = TicketStatus::resolved();
