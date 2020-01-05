@@ -12,13 +12,13 @@ final class CommentContent
 
     public function __construct(string $content)
     {
-        if (strlen($content) < self::CONTENT_MIN_LENGTH) {
+        if (mb_strlen($content) < self::CONTENT_MIN_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Content must contains minimum %d characters.', self::CONTENT_MIN_LENGTH)
             );
         }
 
-        if (strlen($content) > self::CONTENT_MAX_LENGTH) {
+        if (mb_strlen($content) > self::CONTENT_MAX_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Content must contains maximum %d characters.', self::CONTENT_MAX_LENGTH)
             );

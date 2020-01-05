@@ -12,13 +12,13 @@ final class TicketTitle
 
     public function __construct(string $title)
     {
-        if (strlen($title) < self::TITLE_MIN_LENGTH) {
+        if (mb_strlen($title) < self::TITLE_MIN_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Title must contains minimum %d characters.', self::TITLE_MIN_LENGTH)
             );
         }
 
-        if (strlen($title) > self::TITLE_MAX_LENGTH) {
+        if (mb_strlen($title) > self::TITLE_MAX_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Title must contains maximum %d characters.', self::TITLE_MAX_LENGTH)
             );

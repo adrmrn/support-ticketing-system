@@ -12,13 +12,13 @@ final class CategoryName
 
     public function __construct(string $name)
     {
-        if (strlen($name) < self::NAME_MIN_LENGTH) {
+        if (mb_strlen($name) < self::NAME_MIN_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Name must contains minimum %d characters.', self::NAME_MIN_LENGTH)
             );
         }
 
-        if (strlen($name) > self::NAME_MAX_LENGTH) {
+        if (mb_strlen($name) > self::NAME_MAX_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Name must contains maximum %d characters.', self::NAME_MAX_LENGTH)
             );

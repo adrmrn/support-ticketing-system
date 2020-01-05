@@ -12,13 +12,13 @@ final class TicketDescription
 
     public function __construct(string $description)
     {
-        if (strlen($description) < self::DESCRIPTION_MIN_LENGTH) {
+        if (mb_strlen($description) < self::DESCRIPTION_MIN_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Description must contains minimum %d characters.', self::DESCRIPTION_MIN_LENGTH)
             );
         }
 
-        if (strlen($description) > self::DESCRIPTION_MAX_LENGTH) {
+        if (mb_strlen($description) > self::DESCRIPTION_MAX_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('Description must contains maximum %d characters.', self::DESCRIPTION_MAX_LENGTH)
             );
