@@ -9,6 +9,8 @@ use User\Core\Application\Exception\ValidationException;
 use User\Core\Application\UseCase\RegisterUser\RegisterUser;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use User\Core\Application\UseCase\RegisterUser\RegisterUserRequest;
+use User\Core\Domain\Event\DomainEventPublisher;
+use User\Core\Infrastructure\Delivery\Api\Event\RegisteredUserIdSubscriber;
 use User\Core\Infrastructure\Delivery\Api\Request\Validator\RegisterUserValidator;
 
 class UserController extends BaseController
@@ -30,6 +32,7 @@ class UserController extends BaseController
             );
         }
 
+        $userIdListener = $this->listenForRegisteredUserId();
         $registerUserRequest = new RegisterUserRequest(
             $request->get('email'),
             $request->get('firstName'),
@@ -38,6 +41,15 @@ class UserController extends BaseController
         );
         $this->registerUser->execute($registerUserRequest);
 
-        return new JsonResponse(null, 201);
+        return new JsonResponse([
+            'id' => $userIdListener->userId()
+        ], 201);
+    }
+
+    private function listenForRegisteredUserId(): RegisteredUserIdSubscriber
+    {
+        $listener = new RegisteredUserIdSubscriber();
+        DomainEventPublisher::instance()->subscribe($listener);
+        return $listener;
     }
 }
