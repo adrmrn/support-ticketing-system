@@ -13,7 +13,7 @@ class CreateCategoryValidator extends Validator
         $constraints = new Assert\Collection([
             'name' => [
                 new Assert\NotBlank(),
-                new Assert\Length(['min' => 1, 'max' => 255])
+                new Assert\Length(['min' => 1, 'max' => 100])
             ]
         ]);
 

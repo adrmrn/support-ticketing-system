@@ -26,6 +26,12 @@ services:
     Ticket\Infrastructure\Delivery\Api\Controller\CategoryController:
         public: true
 
+    Ticket\Infrastructure\Delivery\Api\Controller\TicketController:
+        public: true
+
+    Ticket\Infrastructure\Delivery\Api\Controller\CommentController:
+        public: true
+
     ########## DOMAIN ##########
 
     Ticket\Domain\Category\CategoryRepository:

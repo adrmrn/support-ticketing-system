@@ -6,7 +6,9 @@ namespace Ticket\Infrastructure\Delivery\Api\Controller;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Ticket\Application\Exception\ValidationException;
 use Ticket\Application\UseCase\CreateTicket\CreateTicketCommand;
+use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateTicketValidator;
 
 class TicketController
 {
@@ -19,11 +21,16 @@ class TicketController
 
     public function createTicket(Request $request): JsonResponse
     {
+        $validator = new CreateTicketValidator($request->request->all());
+        if (!$validator->isValid()) {
+            throw ValidationException::withErrors($validator->errors());
+        }
+
         $command = new CreateTicketCommand(
-            $request->get('title') ?? '',
-            $request->get('description') ?? '',
-            $request->get('categoryId') ?? '',
-            $request->get('authorId') ?? ''
+            $request->get('title'),
+            $request->get('description'),
+            $request->get('categoryId'),
+            $request->get('authorId')
         );
         $this->commandBus->handle($command);
 
