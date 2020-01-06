@@ -1,0 +1,27 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        types:
+            Ticket\Domain\Category\CategoryName: 'Ticket\Infrastructure\Persistence\Doctrine\Type\CategoryNameType'
+            Ticket\Domain\Category\CategoryId: 'Ticket\Infrastructure\Persistence\Doctrine\Type\CategoryIdType'
+            Ticket\Domain\Ticket\TicketId: 'Ticket\Infrastructure\Persistence\Doctrine\Type\TicketIdType'
+            Ticket\Domain\Ticket\TicketTitle: 'Ticket\Infrastructure\Persistence\Doctrine\Type\TicketTitleType'
+            Ticket\Domain\Ticket\TicketDescription: 'Ticket\Infrastructure\Persistence\Doctrine\Type\TicketDescriptionType'
+            Ticket\Domain\Ticket\TicketStatus: 'Ticket\Infrastructure\Persistence\Doctrine\Type\TicketStatusType'
+            Ticket\Domain\Comment\CommentId: 'Ticket\Infrastructure\Persistence\Doctrine\Type\CommentIdType'
+            Ticket\Domain\Comment\CommentContent: 'Ticket\Infrastructure\Persistence\Doctrine\Type\CommentContentType'
+            Ticket\Domain\User\UserId: 'Ticket\Infrastructure\Persistence\Doctrine\Type\UserIdType'
+
+        # IMPORTANT: You MUST configure your server version,
+        # either here or in the DATABASE_URL env var (see .env file)
+        #server_version: '5.7'
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.default
+        auto_mapping: true
+        mappings:
+            Ticket:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'Ticket'

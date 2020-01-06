@@ -1,0 +1,8 @@
+<doctrine-mapping>
+    <entity name="Ticket\Domain\Category\Category" table="categories">
+        <id name="id" type="Ticket\Domain\Category\CategoryId">
+            <generator strategy="NONE" />
+        </id>
+        <field name="name" type="Ticket\Domain\Category\CategoryName" length="100" />
+    </entity>
+</doctrine-mapping>

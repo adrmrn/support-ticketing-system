@@ -1,0 +1,11 @@
+<doctrine-mapping>
+    <entity name="Ticket\Domain\Comment\Comment" table="comments">
+        <id name="id" type="Ticket\Domain\Comment\CommentId">
+            <generator strategy="NONE" />
+        </id>
+        <field name="content" type="Ticket\Domain\Comment\CommentContent" />
+        <field name="authorId" column="author_id" type="Ticket\Domain\User\UserId" />
+        <field name="ticketId" column="ticket_id" type="Ticket\Domain\Ticket\TicketId" />
+        <field name="createdAt" column="created_at" type="datetime" />
+    </entity>
+</doctrine-mapping>

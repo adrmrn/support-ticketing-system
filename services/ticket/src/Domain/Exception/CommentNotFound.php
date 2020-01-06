@@ -12,7 +12,7 @@ final class CommentNotFound extends \Exception
         parent::__construct($message);
     }
 
-    public function withCommentId(CommentId $commentId): CommentNotFound
+    public static function withCommentId(CommentId $commentId): CommentNotFound
     {
         return new self(
             sprintf('Comment not found. Comment ID: %s', (string)$commentId)
