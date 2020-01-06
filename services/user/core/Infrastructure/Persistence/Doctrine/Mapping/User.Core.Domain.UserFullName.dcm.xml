@@ -1,0 +1,6 @@
+<doctrine-mapping>
+    <embeddable name="User\Core\Domain\UserFullName">
+        <field name="firstName" column="first_name" type="string" />
+        <field name="lastName" column="last_name" type="string" />
+    </embeddable>
+</doctrine-mapping>
