@@ -16,4 +16,5 @@ interface CommentRepository
      * @throws CommentNotFound
      */
     public function getById(CommentId $id): Comment;
+    public function remove(Comment $comment): void;
 }

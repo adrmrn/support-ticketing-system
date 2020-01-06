@@ -23,7 +23,7 @@ class CategoryController
 
     public function createCategory(Request $request): JsonResponse
     {
-        $validator = new CreateCategoryValidator($request->request->all());
+        $validator = new CreateCategoryValidator($request);
         if (!$validator->isValid()) {
             throw ValidationException::withErrors($validator->errors());
         }
@@ -38,9 +38,7 @@ class CategoryController
 
     public function editCategory(string $categoryId, Request $request): JsonResponse
     {
-        $data = $request->request->all();
-        $data['id'] = $categoryId;
-        $validator = new EditCategoryValidator($data);
+        $validator = new CreateCategoryValidator($request);
         if (!$validator->isValid()) {
             throw ValidationException::withErrors($validator->errors());
         }

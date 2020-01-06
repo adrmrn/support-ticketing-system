@@ -3,21 +3,27 @@ declare(strict_types=1);
 
 namespace Ticket\Infrastructure\Delivery\Api\Request\Validator;
 
-use Symfony\Component\Validator\Validation;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validation;
 
-class EditCategoryValidator extends Validator
+class AddCommentValidator extends Validator
 {
-    protected function validate(array $data): void
+    protected function validate(Request $request): void
     {
+        $data = $request->request->all();
         $constraints = new Assert\Collection([
-            'id' => [
+            'content' => [
+                new Assert\NotBlank(),
+                new Assert\Length(['min' => 1])
+            ],
+            'ticketId' => [
                 new Assert\NotBlank(),
                 new Assert\Uuid()
             ],
-            'name' => [
+            'authorId' => [
                 new Assert\NotBlank(),
-                new Assert\Length(['min' => 1, 'max' => 100])
+                new Assert\Uuid()
             ]
         ]);
 

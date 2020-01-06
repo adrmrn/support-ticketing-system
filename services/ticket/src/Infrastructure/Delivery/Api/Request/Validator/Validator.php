@@ -3,15 +3,16 @@ declare(strict_types=1);
 
 namespace Ticket\Infrastructure\Delivery\Api\Request\Validator;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 abstract class Validator
 {
     private array $errors = [];
 
-    public function __construct(array $data)
+    public function __construct(Request $request)
     {
-        $this->validate($data);
+        $this->validate($request);
     }
 
     public function isValid(): bool
@@ -24,7 +25,7 @@ abstract class Validator
         return $this->errors;
     }
 
-    abstract protected function validate(array $data): void;
+    abstract protected function validate(Request $request): void;
 
     protected function mapErrors(ConstraintViolationListInterface $listOfErrors): void
     {

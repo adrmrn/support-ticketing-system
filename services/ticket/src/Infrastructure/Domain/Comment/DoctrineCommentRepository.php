@@ -44,4 +44,9 @@ class DoctrineCommentRepository implements CommentRepository
 
         return $comment;
     }
+
+    public function remove(Comment $comment): void
+    {
+        $this->entityManager->remove($comment);
+    }
 }

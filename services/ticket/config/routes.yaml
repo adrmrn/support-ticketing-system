@@ -13,7 +13,27 @@ createTicket:
     methods: POST
     controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::createTicket
 
+editTicket:
+    path: /api/ticket/{ticketId}
+    methods: PUT
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::editTicket
+
+resolveTicket:
+    path: /api/ticket/{ticketId}/resolve
+    methods: PATCH
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::resolveTicket
+
 addComment:
     path: /api/comment
     methods: POST
     controller: Ticket\Infrastructure\Delivery\Api\Controller\CommentController::addComment
+
+editComment:
+    path: /api/comment/{commentId}
+    methods: POST
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\CommentController::editComment
+
+removeComment:
+    path: /api/comment/{commentId}
+    methods: DELETE
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\CommentController::removeComment

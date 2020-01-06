@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace Ticket\Infrastructure\Delivery\Api\Request\Validator;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 
 class CreateTicketValidator extends Validator
 {
-    protected function validate(array $data): void
+    protected function validate(Request $request): void
     {
+        $data = $request->request->all();
         $constraints = new Assert\Collection([
             'title' => [
                 new Assert\NotBlank(),

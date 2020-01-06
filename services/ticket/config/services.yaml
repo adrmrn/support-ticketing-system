@@ -108,3 +108,11 @@ services:
                 name: tactician.handler,
                 command: Ticket\Application\UseCase\EditComment\EditCommentCommand
             }
+
+    Ticket\Application\UseCase\RemoveComment\RemoveCommentHandler:
+        class: Ticket\Application\UseCase\RemoveComment\RemoveCommentHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\RemoveComment\RemoveCommentCommand
+            }

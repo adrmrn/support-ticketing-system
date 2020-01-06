@@ -1,29 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Ticket\Application\UseCase\EditComment;
+namespace Ticket\Application\UseCase\RemoveComment;
 
-class EditCommentCommand
+class RemoveCommentCommand
 {
     private string $commentId;
-    private string $content;
     private string $authorId;
 
-    public function __construct(string $commentId, string $content, string $authorId)
+    public function __construct(string $commentId, string $authorId)
     {
         $this->commentId = $commentId;
-        $this->content = $content;
         $this->authorId = $authorId;
     }
 
     public function commentId(): string
     {
         return $this->commentId;
-    }
-
-    public function content(): string
-    {
-        return $this->content;
     }
 
     public function authorId(): string
