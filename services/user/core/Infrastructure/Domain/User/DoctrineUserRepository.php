@@ -31,7 +31,6 @@ class DoctrineUserRepository implements UserRepository
     public function add(User $user): void
     {
         $this->entityManager->persist($user);
-        $this->entityManager->flush();
     }
 
     /**

@@ -30,6 +30,5 @@ class DoctrineEventStore implements EventStore
             $event->dataAsJson()
         );
         $this->entityManager->persist($storedEvent);
-        $this->entityManager->flush();
     }
 }

@@ -17,8 +17,6 @@ $router->get('/', function () use ($router) {
     ]);
 });
 
-$router->post('/api/user', '\User\Core\Infrastructure\Delivery\Api\Controller\UserController@registerUser');
-
-//$router->group(['prefix' => 'api'], function () use ($router) {
-//    $router->post('/user', '\User\Core\Infrastructure\Delivery\Api\Controller\UserController@registerUser');
-//});
+$router->group(['prefix' => 'api', 'middleware' => ['transaction']], function () use ($router) {
+    $router->post('/user', '\User\Core\Infrastructure\Delivery\Api\Controller\UserController@registerUser');
+});
