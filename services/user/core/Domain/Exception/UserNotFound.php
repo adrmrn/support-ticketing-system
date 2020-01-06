@@ -13,7 +13,7 @@ final class UserNotFound extends \Exception
         parent::__construct($message);
     }
 
-    private static function withUserId(UserId $userId): UserNotFound
+    public static function withUserId(UserId $userId): UserNotFound
     {
         return new self(
             sprintf('User not found. User ID: %s', (string)$userId)

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Infrastructure\Domain;
+namespace User\Core\Infrastructure\Shared\Domain;
 
 use User\Core\Shared\Domain\HashedPassword;
 

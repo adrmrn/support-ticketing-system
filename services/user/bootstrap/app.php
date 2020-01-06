@@ -79,6 +79,9 @@ $app->singleton(
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\FactoriesProvider::class);
+$app->register(App\Providers\ContractsProvider::class);
+$app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
