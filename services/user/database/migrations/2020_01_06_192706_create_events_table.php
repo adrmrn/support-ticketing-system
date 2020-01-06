@@ -18,7 +18,8 @@ class CreateEventsTable extends Migration
             $table->string('event_name');
             $table->uuid('aggregate_id');
             $table->timestamp('occurred_on');
-            $table->json('event_body');
+            $table->integer('version');
+            $table->json('event_data');
         });
     }
 

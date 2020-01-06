@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace User\Core\Application\UseCase\RegisterUser;
 
 use User\Core\Application\PasswordHashing;
-use User\Core\Domain\User;
-use User\Core\Domain\UserFullName;
-use User\Core\Domain\UserRepository;
-use User\Core\Shared\Domain\Email;
+use User\Core\Domain\User\User;
+use User\Core\Domain\User\UserFullName;
+use User\Core\Domain\User\UserRepository;
+use User\Core\Domain\Email;
 
 class RegisterUser
 {

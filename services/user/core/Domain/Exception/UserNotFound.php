@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace User\Core\Domain\Exception;
 
-use Throwable;
-use User\Core\Domain\UserId;
+use User\Core\Domain\User\UserId;
 
 final class UserNotFound extends \Exception
 {

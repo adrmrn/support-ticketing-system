@@ -1,17 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Infrastructure\Domain;
+namespace User\Core\Infrastructure\Domain\User;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use User\Core\Domain\Exception\UserNotFound;
-use User\Core\Domain\User;
-use User\Core\Domain\UserId;
-use User\Core\Domain\UserRepository;
-use User\Core\Shared\Domain\Email;
+use User\Core\Domain\User\User;
+use User\Core\Domain\User\UserId;
+use User\Core\Domain\User\UserRepository;
+use User\Core\Domain\Email;
 
 class DoctrineUserRepository implements UserRepository
 {

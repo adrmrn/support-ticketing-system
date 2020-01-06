@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Domain;
+namespace User\Core\Domain\User;
 
 use User\Core\Domain\Exception\UserNotFound;
-use User\Core\Shared\Domain\Email;
+use User\Core\Domain\Email;
 
 interface UserRepository
 {

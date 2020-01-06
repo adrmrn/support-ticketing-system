@@ -5,8 +5,8 @@ namespace User\Core\Infrastructure\Persistence\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
-use User\Core\Infrastructure\Shared\Domain\BcryptHashedPassword;
-use User\Core\Shared\Domain\HashedPassword;
+use User\Core\Infrastructure\Domain\BcryptHashedPassword;
+use User\Core\Domain\HashedPassword;
 
 class HashedPasswordType extends StringType
 {

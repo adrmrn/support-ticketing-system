@@ -1,0 +1,10 @@
+<doctrine-mapping>
+    <entity name="User\Core\Domain\User\User" table="users">
+        <id name="id" type="User\Core\Domain\User\UserId">
+            <generator strategy="NONE" />
+        </id>
+        <embedded name="fullName" use-column-prefix="false" class="User\Core\Domain\User\UserFullName" />
+        <field name="email" type="User\Core\Domain\Email" />
+        <field name="hashedPassword" column="hashed_password" type="User\Core\Domain\HashedPassword" />
+    </entity>
+</doctrine-mapping>

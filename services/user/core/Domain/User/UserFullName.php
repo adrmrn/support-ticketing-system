@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Domain;
+namespace User\Core\Domain\User;
 
 class UserFullName
 {

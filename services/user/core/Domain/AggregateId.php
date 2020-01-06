@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Shared\Domain;
+namespace User\Core\Domain;
 
 trait AggregateId
 {
@@ -26,7 +26,7 @@ trait AggregateId
         return $this->id;
     }
 
-    public function equals(\Ticket\Shared\Domain\AggregateId $otherAggregateId): bool
+    public function equals(AggregateId $otherAggregateId): bool
     {
         return get_class($otherAggregateId) === get_class($this)
             && (string)$this === (string)$otherAggregateId;

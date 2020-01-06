@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Infrastructure\Shared\Domain;
+namespace User\Core\Infrastructure\Domain;
 
-use User\Core\Shared\Domain\HashedPassword;
+use User\Core\Domain\HashedPassword;
 
 class BcryptHashedPassword implements HashedPassword
 {

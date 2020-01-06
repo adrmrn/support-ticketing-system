@@ -5,7 +5,7 @@ namespace User\Core\Infrastructure\Persistence\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
-use User\Core\Domain\UserId;
+use User\Core\Domain\User\UserId;
 
 class UserIdType extends StringType
 {

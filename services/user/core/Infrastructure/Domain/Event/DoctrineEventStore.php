@@ -5,9 +5,9 @@ namespace User\Core\Infrastructure\Domain\Event;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use User\Core\Shared\Domain\DomainEvent;
-use User\Core\Shared\Domain\Event\EventStore;
-use User\Core\Shared\Domain\Event\StoredEvent;
+use User\Core\Domain\Event\DomainEvent;
+use User\Core\Domain\Event\EventStore;
+use User\Core\Domain\Event\StoredEvent;
 
 class DoctrineEventStore implements EventStore
 {
@@ -26,6 +26,7 @@ class DoctrineEventStore implements EventStore
             get_class($event),
             $event->aggregateId(),
             $event->occurredOn(),
+            $event->version(),
             $event->dataAsJson()
         );
         $this->entityManager->persist($storedEvent);

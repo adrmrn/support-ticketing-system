@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Shared\Domain\Event;
+namespace User\Core\Domain\Event;
 
 class StoredEvent
 {
@@ -16,18 +16,21 @@ class StoredEvent
     private string $eventName;
     private string $aggregateId;
     private \DateTimeInterface $occurredOn;
-    private string $eventBodyAsJson;
+    private int $version;
+    private string $eventDataAsJson;
 
     public function __construct(
         string $eventName,
         string $aggregateId,
         \DateTimeInterface $occurredOn,
-        string $eventBodyAsJson
+        int $version,
+        string $eventDataAsJson
     ) {
         $this->eventName = $eventName;
         $this->aggregateId = $aggregateId;
         $this->occurredOn = $occurredOn;
-        $this->eventBodyAsJson = $eventBodyAsJson;
+        $this->version = $version;
+        $this->eventDataAsJson = $eventDataAsJson;
     }
 
     public function eventId(): int
@@ -50,8 +53,13 @@ class StoredEvent
         return $this->occurredOn;
     }
 
-    public function eventBodyAsJson(): string
+    public function version(): int
     {
-        return $this->eventBodyAsJson;
+        return $this->version;
+    }
+
+    public function eventDataAsJson(): string
+    {
+        return $this->eventDataAsJson;
     }
 }

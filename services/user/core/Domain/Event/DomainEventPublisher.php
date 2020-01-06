@@ -1,10 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Shared\Domain\Event;
-
-use User\Core\Shared\Domain\DomainEvent;
-use User\Core\Shared\Domain\Event\DomainEventSubscriber;
+namespace User\Core\Domain\Event;
 
 final class DomainEventPublisher
 {

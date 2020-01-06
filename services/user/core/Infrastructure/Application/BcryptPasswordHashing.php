@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Shared\Application;
+namespace User\Core\Infrastructure\Application;
 
 use User\Core\Application\Exception\PasswordCannotBeHashed;
 use User\Core\Application\PasswordHashing;
-use User\Core\Infrastructure\Shared\Domain\BcryptHashedPassword;
-use User\Core\Shared\Domain\HashedPassword;
+use User\Core\Infrastructure\Domain\BcryptHashedPassword;
+use User\Core\Domain\HashedPassword;
 
 class BcryptPasswordHashing implements PasswordHashing
 {

@@ -1,16 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Domain;
+namespace User\Core\Domain\User;
 
-use User\Core\Shared\Domain\Calendar;
-use User\Core\Shared\Domain\DomainEvent;
-use User\Core\Shared\Domain\AggregateId;
-use User\Core\Shared\Domain\Email;
-use User\Core\Shared\Domain\HashedPassword;
-use User\Core\Shared\Domain\Identifier;
+use User\Core\Domain\Calendar\Calendar;
+use User\Core\Domain\Event\DomainEvent;
+use User\Core\Domain\Email;
+use User\Core\Domain\HashedPassword;
 
-class UserCreated implements DomainEvent
+class UserRegistered implements DomainEvent
 {
     private UserId $userId;
     private UserFullName $fullName;
@@ -39,6 +37,11 @@ class UserCreated implements DomainEvent
     public function occurredOn(): \DateTimeInterface
     {
         return $this->occurredOn;
+    }
+
+    public function version(): int
+    {
+        return 0;
     }
 
     public function dataAsJson(): string

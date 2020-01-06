@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Shared\Domain;
+namespace User\Core\Domain\Calendar;
 
 class RealTimeProvider implements CalendarProvider
 {

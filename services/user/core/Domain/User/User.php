@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Domain;
+namespace User\Core\Domain\User;
 
-use User\Core\Shared\Domain\Event\DomainEventPublisher;
-use User\Core\Shared\Domain\Calendar;
-use User\Core\Shared\Domain\Email;
-use User\Core\Shared\Domain\HashedPassword;
+use User\Core\Domain\Event\DomainEventPublisher;
+use User\Core\Domain\Email;
+use User\Core\Domain\HashedPassword;
 
 class User
 {
@@ -30,7 +29,7 @@ class User
         $this->hashedPassword = $hashedPassword;
 
         DomainEventPublisher::instance()->publish(
-            new UserCreated(
+            new UserRegistered(
                 $this->id(),
                 $this->fullName(),
                 $this->email(),

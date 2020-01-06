@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace User\Core\Application;
 
 use User\Core\Application\Exception\PasswordCannotBeHashed;
-use User\Core\Shared\Domain\HashedPassword;
+use User\Core\Domain\HashedPassword;
 
 interface PasswordHashing
 {
