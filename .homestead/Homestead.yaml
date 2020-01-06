@@ -22,7 +22,7 @@ sites:
     - map: ticket.sts.app
       to: /home/vagrant/support-ticketing-system/ticket/public
     - map: user.sts.app
-      to: /home/vagrant/support-ticketing-system/user
+      to: /home/vagrant/support-ticketing-system/user/public
 databases:
     - auth
     - notification
