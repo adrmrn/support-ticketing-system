@@ -81,6 +81,7 @@ $app->singleton(
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\FactoriesProvider::class);
 $app->register(App\Providers\ContractsProvider::class);
+$app->register(App\Providers\DomainEventPublisherProvider::class);
 $app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
 
 /*
