@@ -16,7 +16,7 @@ folders:
       to: /home/vagrant/support-ticketing-system/user
 sites:
     - map: auth.sts.app
-      to: /home/vagrant/support-ticketing-system/auth
+      to: /home/vagrant/support-ticketing-system/auth/public
     - map: notification.sts.app
       to: /home/vagrant/support-ticketing-system/notification
     - map: ticket.sts.app
