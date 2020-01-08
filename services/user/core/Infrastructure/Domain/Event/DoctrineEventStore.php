@@ -31,4 +31,19 @@ class DoctrineEventStore implements EventStore
         );
         $this->entityManager->persist($storedEvent);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function allStoredEventsSince(int $eventId): array
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('e')
+            ->from(StoredEvent::class, 'e')
+            ->where('e.eventId > :eventId')
+            ->orderBy('e.eventId', 'ASC')
+            ->setParameter(':eventId', $eventId);
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

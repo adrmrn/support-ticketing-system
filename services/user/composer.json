@@ -6,12 +6,14 @@
     "type": "project",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "doctrine/dbal": "^2.10",
         "laravel-doctrine/orm": "^1.5",
         "laravel/lumen-framework": "^6.0",
+        "php-amqplib/php-amqplib": "^2.11",
         "ramsey/uuid": "^3.9",
         "ramsey/uuid-doctrine": "^1.5",
-        "ext-json": "*"
+        "ext-amqp": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

@@ -10,6 +10,10 @@ use User\Core\Infrastructure\Domain\User\DoctrineUserRepository;
 use User\Core\Infrastructure\Domain\Event\DoctrineEventStore;
 use User\Core\Domain\Event\EventStore;
 use User\Core\Infrastructure\Application\BcryptPasswordHashing;
+use User\Core\Infrastructure\Messaging\MessageProducer;
+use User\Core\Infrastructure\Messaging\MySqlPublishedMessageTracker;
+use User\Core\Infrastructure\Messaging\PublishedMessageTracker;
+use User\Core\Infrastructure\Messaging\RabbitMq\RabbitMqMessageProducer;
 
 class ContractsProvider extends ServiceProvider
 {
@@ -18,5 +22,7 @@ class ContractsProvider extends ServiceProvider
         $this->app->bind(UserRepository::class, DoctrineUserRepository::class);
         $this->app->bind(PasswordHashing::class, BcryptPasswordHashing::class);
         $this->app->bind(EventStore::class, DoctrineEventStore::class);
+        $this->app->bind(PublishedMessageTracker::class, MySqlPublishedMessageTracker::class);
+        $this->app->bind(MessageProducer::class, RabbitMqMessageProducer::class);
     }
 }

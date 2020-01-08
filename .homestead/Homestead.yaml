@@ -32,5 +32,6 @@ features:
     - mariadb: false
     - ohmyzsh: false
     - webdriver: false
+    - rabbitmq: true
 name: support-ticketing-system
 hostname: support-ticketing-system

@@ -17,20 +17,20 @@ class StoredEvent
     private string $aggregateId;
     private \DateTimeInterface $occurredOn;
     private int $version;
-    private string $eventDataAsJson;
+    private string $dataAsJson;
 
     public function __construct(
         string $eventName,
         string $aggregateId,
         \DateTimeInterface $occurredOn,
         int $version,
-        string $eventDataAsJson
+        string $dataAsJson
     ) {
         $this->eventName = $eventName;
         $this->aggregateId = $aggregateId;
         $this->occurredOn = $occurredOn;
         $this->version = $version;
-        $this->eventDataAsJson = $eventDataAsJson;
+        $this->dataAsJson = $dataAsJson;
     }
 
     public function eventId(): int
@@ -58,8 +58,8 @@ class StoredEvent
         return $this->version;
     }
 
-    public function eventDataAsJson(): string
+    public function dataAsJson(): string
     {
-        return $this->eventDataAsJson;
+        return $this->dataAsJson;
     }
 }

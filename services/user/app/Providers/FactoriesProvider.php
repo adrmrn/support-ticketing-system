@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Connection;
 use Illuminate\Support\ServiceProvider;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use User\Core\Infrastructure\Persistence\Doctrine\DbalConnectionFactory;
 
 class FactoriesProvider extends ServiceProvider
@@ -13,6 +14,9 @@ class FactoriesProvider extends ServiceProvider
     {
         $this->app->bind(Connection::class, function() {
             return DbalConnectionFactory::create();
+        });
+        $this->app->bind(AMQPStreamConnection::class, function() {
+            return new AMQPStreamConnection('localhost', 5672, 'homestead', 'secret');
         });
     }
 }
