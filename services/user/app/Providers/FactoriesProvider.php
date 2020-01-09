@@ -16,6 +16,7 @@ class FactoriesProvider extends ServiceProvider
             return DbalConnectionFactory::create();
         });
         $this->app->bind(AMQPStreamConnection::class, function() {
+            // TODO: change default credentials
             return new AMQPStreamConnection('localhost', 5672, 'homestead', 'secret');
         });
     }

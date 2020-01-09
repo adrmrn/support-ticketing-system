@@ -15,9 +15,9 @@ class MessagePublisher extends Command
     protected $name = 'messaging:publish';
     protected $signature = 'messaging:publish {exchangeName=domain.events}';
 
-    public function handle(MessagePublisher $notificationService)
+    public function handle(\User\Core\Infrastructure\Messaging\MessagePublisher $messagePublisher)
     {
         $exchangeName = $this->argument('exchangeName');
-        $notificationService->publishMessages($exchangeName);
+        $messagePublisher->publishMessages($exchangeName);
     }
 }
