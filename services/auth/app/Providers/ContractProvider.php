@@ -6,9 +6,9 @@ namespace App\Providers;
 use App\Repositories\CredentialsRepository;
 use App\Repositories\MySqlCredentialsRepository;
 use App\Services\BcryptPasswordVerifier;
-use App\Services\JwtService;
+use App\Services\MessageConsumer;
 use App\Services\PasswordVerifier;
-use App\Services\TokenService;
+use App\Services\RabbitMqMessageConsumer;
 use Illuminate\Support\ServiceProvider;
 
 class ContractProvider extends ServiceProvider
@@ -17,5 +17,6 @@ class ContractProvider extends ServiceProvider
     {
         $this->app->bind(CredentialsRepository::class, MySqlCredentialsRepository::class);
         $this->app->bind(PasswordVerifier::class, BcryptPasswordVerifier::class);
+        $this->app->bind(MessageConsumer::class, RabbitMqMessageConsumer::class);
     }
 }
