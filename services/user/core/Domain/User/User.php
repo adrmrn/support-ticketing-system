@@ -20,20 +20,28 @@ class User
     private $fullName;
     private Email $email;
     private HashedPassword $hashedPassword;
+    private UserRole $role;
 
-    public function __construct(UserId $id, UserFullName $fullName, Email $email, HashedPassword $hashedPassword)
-    {
+    public function __construct(
+        UserId $id,
+        UserFullName $fullName,
+        Email $email,
+        HashedPassword $hashedPassword,
+        UserRole $role
+    ) {
         $this->id = $id;
         $this->fullName = $fullName;
         $this->email = $email;
         $this->hashedPassword = $hashedPassword;
+        $this->role = $role;
 
         DomainEventPublisher::instance()->publish(
             new UserRegistered(
                 $this->id(),
                 $this->fullName(),
                 $this->email(),
-                $this->hashedPassword()
+                $this->hashedPassword(),
+                $this->role()
             )
         );
     }
@@ -56,5 +64,10 @@ class User
     public function hashedPassword(): HashedPassword
     {
         return $this->hashedPassword;
+    }
+
+    public function role(): UserRole
+    {
+        return $this->role;
     }
 }

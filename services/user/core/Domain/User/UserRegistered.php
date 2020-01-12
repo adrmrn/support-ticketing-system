@@ -14,18 +14,21 @@ class UserRegistered implements DomainEvent
     private UserFullName $fullName;
     private Email $email;
     private HashedPassword $hashedPassword;
+    private UserRole $role;
     private \DateTimeInterface $occurredOn;
 
     public function __construct(
         UserId $userId,
         UserFullName $fullName,
         Email $email,
-        HashedPassword $hashedPassword
+        HashedPassword $hashedPassword,
+        UserRole $role
     ) {
         $this->userId = $userId;
         $this->fullName = $fullName;
         $this->email = $email;
         $this->hashedPassword = $hashedPassword;
+        $this->role = $role;
         $this->occurredOn = Calendar::now();
     }
 
@@ -53,7 +56,8 @@ class UserRegistered implements DomainEvent
                 'lastName' => $this->fullName->lastName()
             ],
             'email' => (string)$this->email,
-            'hashedPassword' => (string)$this->hashedPassword
+            'hashedPassword' => (string)$this->hashedPassword,
+            'role' => (string)$this->role
         ]);
     }
 }

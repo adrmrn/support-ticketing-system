@@ -2,6 +2,7 @@
 
 use User\Core\Infrastructure\Persistence\Doctrine\Type\EmailType;
 use User\Core\Infrastructure\Persistence\Doctrine\Type\HashedPasswordType;
+use User\Core\Infrastructure\Persistence\Doctrine\Type\UserRoleType;
 use User\Core\Infrastructure\Persistence\Doctrine\Type\UserIdType;
 
 return [
@@ -115,7 +116,8 @@ return [
         'uuid' => \Ramsey\Uuid\Doctrine\UuidType::class,
         UserIdType::NAME => UserIdType::class,
         HashedPasswordType::NAME => HashedPasswordType::class,
-        EmailType::NAME => EmailType::class
+        EmailType::NAME => EmailType::class,
+        UserRoleType::NAME => UserRoleType::class
     ],
     /*
     |--------------------------------------------------------------------------

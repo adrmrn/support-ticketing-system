@@ -48,7 +48,7 @@ class DoctrineUserRepository implements UserRepository
 
     public function existsByEmail(Email $email): bool
     {
-        $user = $this->repository->findBy([
+        $user = $this->repository->findOneBy([
             'email' => $email
         ]);
         return $user instanceof User;

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace User\Core\Application\UseCase\RegisterUser;
+namespace User\Core\Application\UseCase\RegisterCustomer;
 
-class RegisterUserRequest
+class RegisterCustomerRequest
 {
     private string $email;
     private string $firstName;

@@ -6,5 +6,6 @@
         <embedded name="fullName" use-column-prefix="false" class="User\Core\Domain\User\UserFullName" />
         <field name="email" type="User\Core\Domain\Email" />
         <field name="hashedPassword" column="hashed_password" type="User\Core\Domain\HashedPassword" />
+        <field name="role" type="User\Core\Domain\User\UserRole" />
     </entity>
 </doctrine-mapping>
