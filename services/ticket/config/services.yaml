@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    jwt_secret: 'very-strong-secret'
 
 services:
     # default configuration for services in *this* file
@@ -31,6 +32,21 @@ services:
 
     Ticket\Infrastructure\Delivery\Api\Controller\CommentController:
         public: true
+
+    Ticket\Infrastructure\Delivery\Api\Authenticator\TokenService:
+        class: Ticket\Infrastructure\Delivery\Api\Authenticator\JwtTokenService
+        arguments:
+            $secret: '%jwt_secret%'
+
+    Ticket\Infrastructure\Delivery\Api\Authenticator\JwtProvider:
+        arguments:
+            $tokenService: '@Ticket\Infrastructure\Delivery\Api\Authenticator\TokenService'
+        public: false
+
+    Ticket\Infrastructure\Delivery\Api\Authenticator\JwtListener:
+        arguments:
+            $tokenService: '@Ticket\Infrastructure\Delivery\Api\Authenticator\TokenService'
+        public: false
 
     ########## DOMAIN ##########
 

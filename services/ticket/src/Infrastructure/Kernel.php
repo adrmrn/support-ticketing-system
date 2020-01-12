@@ -8,12 +8,21 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use Ticket\Infrastructure\Delivery\Api\Authenticator\JwtFactory;
 
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $extension = $container->getExtension('security');
+        $extension->addSecurityListenerFactory(new JwtFactory());
+    }
 
     public function registerBundles(): iterable
     {
