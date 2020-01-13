@@ -62,7 +62,8 @@ $app->singleton(
 // ]);
 
 $app->routeMiddleware([
-    'transaction' => \User\Core\Infrastructure\Middleware\DoctrineTransactionMiddleware::class
+    'transaction' => \User\Core\Infrastructure\Middleware\DoctrineTransactionMiddleware::class,
+    'auth.rpc' => \User\Core\Infrastructure\Middleware\RpcApiKeyAuthenticationMiddleware::class
 ]);
 
 /*
