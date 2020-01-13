@@ -4,15 +4,16 @@ declare(strict_types=1);
 namespace Ticket\Infrastructure\Delivery\Api\Controller;
 
 use League\Tactician\CommandBus;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Ticket\Application\Exception\ValidationException;
 use Ticket\Application\UseCase\CreateCategory\CreateCategoryCommand;
 use Ticket\Application\UseCase\EditCategory\EditCategoryCommand;
+use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateCategoryValidator;
-use Ticket\Infrastructure\Delivery\Api\Request\Validator\EditCategoryValidator;
 
-class CategoryController
+class CategoryController extends AbstractController
 {
     private CommandBus $commandBus;
 
@@ -28,8 +29,11 @@ class CategoryController
             throw ValidationException::withErrors($validator->errors());
         }
 
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
         $command = new CreateCategoryCommand(
-            $request->get('name')
+            $request->get('name'),
+            (string)$authenticatedUser->id()
         );
         $this->commandBus->handle($command);
 
@@ -43,9 +47,12 @@ class CategoryController
             throw ValidationException::withErrors($validator->errors());
         }
 
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
         $command = new EditCategoryCommand(
             $categoryId,
-            $request->get('name')
+            $request->get('name'),
+            (string)$authenticatedUser->id()
         );
         $this->commandBus->handle($command);
 
