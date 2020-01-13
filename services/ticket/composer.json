@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "firebase/php-jwt": "^5.0",
+        "guzzlehttp/guzzle": "^6.5",
         "league/tactician": "^1.0",
         "league/tactician-bundle": "^1.1",
         "ramsey/uuid": "^3.9",
@@ -18,7 +19,8 @@
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
         "symfony/validator": "5.0.*",
-        "symfony/yaml": "5.0.*"
+        "symfony/yaml": "5.0.*",
+        "ext-json": "*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0"

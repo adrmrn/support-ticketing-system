@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     jwt_secret: 'very-strong-secret'
+    user_microservice_rpc_uri: 'http://user.sts.app/rpc'
+    user_microservice_x_rpc_auth_key: 'm6dKMgAdn4VHyPKyqCCssFxnFVAvmmW6RAg4hhG4K4cJhnG7qJYgQV3Vg3Q2'
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +21,9 @@ services:
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     ########## INFRASTRUCTURE ##########
+
+    GuzzleHttp\Client:
+        class: 'GuzzleHttp\Client'
 
     Ticket\Infrastructure\Event\EventListener\Symfony\ExceptionListener:
         tags:
@@ -47,6 +52,12 @@ services:
         arguments:
             $tokenService: '@Ticket\Infrastructure\Delivery\Api\Authenticator\TokenService'
         public: false
+
+    Ticket\Infrastructure\Domain\User\GuzzleUserRepository:
+        arguments:
+            $client: '@GuzzleHttp\Client'
+            $userServiceUri: '%user_microservice_rpc_uri%'
+            $xRpcAuthKey: '%user_microservice_x_rpc_auth_key%'
 
     ########## DOMAIN ##########
 
