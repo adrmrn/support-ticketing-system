@@ -7,13 +7,13 @@ class EditCommentCommand
 {
     private string $commentId;
     private string $content;
-    private string $authorId;
+    private string $executorId;
 
-    public function __construct(string $commentId, string $content, string $authorId)
+    public function __construct(string $commentId, string $content, string $executorId)
     {
         $this->commentId = $commentId;
         $this->content = $content;
-        $this->authorId = $authorId;
+        $this->executorId = $executorId;
     }
 
     public function commentId(): string
@@ -26,8 +26,8 @@ class EditCommentCommand
         return $this->content;
     }
 
-    public function authorId(): string
+    public function executorId(): string
     {
-        return $this->authorId;
+        return $this->executorId;
     }
 }

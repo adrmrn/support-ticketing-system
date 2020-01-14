@@ -4,15 +4,17 @@ declare(strict_types=1);
 namespace Ticket\Infrastructure\Delivery\Api\Controller;
 
 use League\Tactician\CommandBus;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Ticket\Application\Exception\ValidationException;
 use Ticket\Application\UseCase\AddComment\AddCommentCommand;
 use Ticket\Application\UseCase\EditComment\EditCommentCommand;
 use Ticket\Application\UseCase\RemoveComment\RemoveCommentCommand;
+use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\AddCommentValidator;
 
-class CommentController
+class CommentController extends AbstractController
 {
     private CommandBus $commandBus;
 
@@ -28,10 +30,12 @@ class CommentController
             throw ValidationException::withErrors($validator->errors());
         }
 
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
         $command = new AddCommentCommand(
             $request->get('ticketId'),
             $request->get('content'),
-            $request->get('authorId'),
+            (string)$authenticatedUser->id(),
         );
         $this->commandBus->handle($command);
 
@@ -45,10 +49,12 @@ class CommentController
             throw ValidationException::withErrors($validator->errors());
         }
 
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
         $command = new EditCommentCommand(
             $commentId,
             $request->get('content'),
-            $request->get('authorId'),
+            (string)$authenticatedUser->id(),
         );
         $this->commandBus->handle($command);
 
@@ -57,9 +63,11 @@ class CommentController
 
     public function removeComment(string $commentId): JsonResponse
     {
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
         $command = new RemoveCommentCommand(
             $commentId,
-            'mock'
+            (string)$authenticatedUser->id()
         );
         $this->commandBus->handle($command);
 

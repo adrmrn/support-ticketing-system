@@ -6,12 +6,12 @@ namespace Ticket\Application\UseCase\RemoveComment;
 class RemoveCommentCommand
 {
     private string $commentId;
-    private string $authorId;
+    private string $executorId;
 
-    public function __construct(string $commentId, string $authorId)
+    public function __construct(string $commentId, string $executorId)
     {
         $this->commentId = $commentId;
-        $this->authorId = $authorId;
+        $this->executorId = $executorId;
     }
 
     public function commentId(): string
@@ -19,8 +19,8 @@ class RemoveCommentCommand
         return $this->commentId;
     }
 
-    public function authorId(): string
+    public function executorId(): string
     {
-        return $this->authorId;
+        return $this->executorId;
     }
 }
