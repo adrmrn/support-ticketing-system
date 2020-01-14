@@ -10,10 +10,12 @@ use Ticket\Domain\User\UserRole;
 class TicketPermissionService
 {
     private UserRepository $userRepository;
+    private TicketRepository $ticketRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, TicketRepository $ticketRepository)
     {
         $this->userRepository = $userRepository;
+        $this->ticketRepository = $ticketRepository;
     }
 
     public function canUserCreateTicket(UserId $userId): bool
@@ -22,9 +24,20 @@ class TicketPermissionService
         return $user->role()->equals(UserRole::customer());
     }
 
-    public function canUserManageTicket(UserId $userId): bool
+    public function canUserManageTicket(UserId $userId, TicketId $ticketId): bool
     {
         $user = $this->userRepository->getById($userId);
-        return $user->role()->equals(UserRole::admin());
+        if ($user->role()->equals(UserRole::admin())) {
+            return true;
+        }
+
+        $ticket = $this->ticketRepository->getById($ticketId);
+        return $ticket->authorId()->equals($userId);
+    }
+
+    public function canUserResolveTicket(UserId $userId, TicketId $ticketId): bool
+    {
+        $ticket = $this->ticketRepository->getById($ticketId);
+        return $ticket->authorId()->equals($userId);
     }
 }

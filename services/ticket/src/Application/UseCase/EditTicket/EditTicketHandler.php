@@ -33,7 +33,7 @@ class EditTicketHandler
     {
         $userId = UserId::fromString($command->executorId());
         $ticketId = TicketId::fromString($command->ticketId());
-        if (!$this->ticketPermissionService->canUserManageTicket($userId)) {
+        if (!$this->ticketPermissionService->canUserManageTicket($userId, $ticketId)) {
             throw PermissionException::withMessage('User cannot edit that ticket.');
         }
 

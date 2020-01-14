@@ -9,6 +9,7 @@ use Ticket\Domain\Comment\CommentContent;
 use Ticket\Domain\Comment\CommentId;
 use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
 use Ticket\Domain\Exception\ResolvedTicketCannotBeClosed;
+use Ticket\Domain\Exception\TicketIsAlreadyResolved;
 use Ticket\Domain\User\UserId;
 use Ticket\Shared\Domain\Calendar;
 
@@ -75,6 +76,10 @@ class Ticket
 
     public function resolve(): void
     {
+        if ($this->status()->equals(TicketStatus::resolved())) {
+            throw TicketIsAlreadyResolved::withTicketId($this->id());
+        }
+
         $this->status = TicketStatus::resolved();
     }
 

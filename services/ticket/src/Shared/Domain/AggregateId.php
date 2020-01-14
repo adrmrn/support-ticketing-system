@@ -26,7 +26,7 @@ trait AggregateId
         return $this->id;
     }
 
-    public function equals(AggregateId $otherAggregateId): bool
+    public function equals($otherAggregateId): bool
     {
         return get_class($otherAggregateId) === get_class($this)
             && (string)$this === (string)$otherAggregateId;

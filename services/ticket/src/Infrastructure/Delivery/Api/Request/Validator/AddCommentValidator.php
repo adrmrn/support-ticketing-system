@@ -20,10 +20,6 @@ class AddCommentValidator extends Validator
             'ticketId' => [
                 new Assert\NotBlank(),
                 new Assert\Uuid()
-            ],
-            'authorId' => [
-                new Assert\NotBlank(),
-                new Assert\Uuid()
             ]
         ]);
 

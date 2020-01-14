@@ -24,10 +24,6 @@ class CreateTicketValidator extends Validator
             'categoryId' => [
                 new Assert\NotBlank(),
                 new Assert\Uuid()
-            ],
-            'authorId' => [
-                new Assert\NotBlank(),
-                new Assert\Uuid()
             ]
         ]);
 

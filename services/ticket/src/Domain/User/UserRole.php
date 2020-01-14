@@ -6,7 +6,7 @@ namespace Ticket\Domain\User;
 final class UserRole
 {
     private const CUSTOMER = 'customer';
-    private const ADMIN = 'customer';
+    private const ADMIN = 'admin';
 
     private string $role;
 
