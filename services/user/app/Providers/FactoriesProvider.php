@@ -6,6 +6,8 @@ namespace App\Providers;
 use Doctrine\DBAL\Connection;
 use Illuminate\Support\ServiceProvider;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use User\Core\Infrastructure\Delivery\Api\Authenticator\JwtTokenService;
+use User\Core\Infrastructure\Delivery\Api\Authenticator\TokenService;
 use User\Core\Infrastructure\Middleware\RpcApiKeyAuthenticationMiddleware;
 use User\Core\Infrastructure\Persistence\Doctrine\DbalConnectionFactory;
 
@@ -24,6 +26,12 @@ class FactoriesProvider extends ServiceProvider
             // TODO: change default credentials
             return new RpcApiKeyAuthenticationMiddleware(
                 (string)env('RPC_AUTH_KEY')
+            );
+        });
+        $this->app->bind(TokenService::class, function() {
+            // TODO: change default credentials
+            return new JwtTokenService(
+                (string)env('JWT_SECRET')
             );
         });
     }

@@ -6,14 +6,15 @@
     "type": "project",
     "require": {
         "php": "^7.4",
+        "ext-amqp": "*",
         "ext-json": "*",
         "doctrine/dbal": "^2.10",
+        "firebase/php-jwt": "^5.0",
         "laravel-doctrine/orm": "^1.5",
         "laravel/lumen-framework": "^6.0",
         "php-amqplib/php-amqplib": "^2.11",
         "ramsey/uuid": "^3.9",
-        "ramsey/uuid-doctrine": "^1.5",
-        "ext-amqp": "*"
+        "ramsey/uuid-doctrine": "^1.5"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
