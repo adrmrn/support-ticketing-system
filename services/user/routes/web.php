@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api', 'middleware' => ['transaction']], function () use ($router) {
     $router->post('/user', '\User\Core\Infrastructure\Delivery\Api\Controller\UserController@registerCustomer');
+    $router->get('/user/{userId}', '\User\Core\Infrastructure\Delivery\Api\Controller\UserController@getUserById');
 });
 
 $router->group(['prefix' => 'rpc', 'middleware' => ['auth.rpc']], function () use ($router) {
