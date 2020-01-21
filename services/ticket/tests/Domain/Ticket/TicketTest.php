@@ -6,6 +6,7 @@ namespace Ticket\Tests\Domain\Ticket;
 use PHPUnit\Framework\TestCase;
 use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
 use Ticket\Domain\Exception\ResolvedTicketCannotBeClosed;
+use Ticket\Domain\Exception\TicketIsAlreadyResolved;
 use Ticket\Domain\Ticket\TicketStatus;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\DateTimeMother;
@@ -188,7 +189,7 @@ class TicketTest extends TestCase
     {
         // arrange
         $ticket = TicketMother::createDefault();
-        $expectedNewCategory = CategoryIdMother::createDefault('ID-CATEGORY-0');
+        $expectedNewCategory = CategoryIdMother::createDefault();
 
         // act
         $ticket->changeCategory($expectedNewCategory);
@@ -196,6 +197,32 @@ class TicketTest extends TestCase
 
         // assert
         $this->assertEquals($expectedNewCategory, $newCategory);
+    }
+
+    public function testResolve_HaveOpenTicket_TicketStatusHasBeenChangedToResolve(): void
+    {
+        // arrange
+        $ticket = TicketMother::createDefault();
+
+        // act
+        $ticket->resolve();
+        $status = $ticket->status();
+
+        // assert
+        $expectedStatus = TicketStatus::resolved();
+        $this->assertEquals($expectedStatus, $status);
+    }
+
+    public function testResolve_HaveAlreadyResolvedTicket_ThrownException(): void
+    {
+        // arrange
+        $ticket = TicketMother::createResolved();
+
+        // assert
+        $this->expectException(TicketIsAlreadyResolved::class);
+
+        // act
+        $ticket->resolve();
     }
 
     public function testAddComment_TicketIsClosedAndCommentCannotBeAdded_ThrownException(): void

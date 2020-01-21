@@ -23,12 +23,13 @@ class ResolveTicketHandler
     public function handle(ResolveTicketCommand $command): void
     {
         $user = $command->executor();
-        $ticketId = TicketId::fromString($command->ticketId());
-        if (!$this->ticketPermissionService->canUserResolveTicket($user, $ticketId)) {
+        $ticket = $this->ticketRepository->getById(
+            TicketId::fromString($command->ticketId())
+        );
+        if (!$this->ticketPermissionService->canUserResolveTicket($user, $ticket)) {
             throw PermissionException::withMessage('User cannot resolve that ticket.');
         }
 
-        $ticket = $this->ticketRepository->getById($ticketId);
         $ticket->resolve();
     }
 }

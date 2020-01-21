@@ -9,7 +9,6 @@ use Ticket\Domain\Comment\CommentPermissionService;
 use Ticket\Domain\Comment\CommentRepository;
 use Ticket\Domain\Ticket\TicketId;
 use Ticket\Domain\Ticket\TicketRepository;
-use Ticket\Domain\User\UserId;
 
 class AddCommentHandler
 {
@@ -29,13 +28,14 @@ class AddCommentHandler
 
     public function handle(AddCommentCommand $command): void
     {
-        $ticketId = TicketId::fromString($command->ticketId());
+        $ticket = $this->ticketRepository->getById(
+            TicketId::fromString($command->ticketId())
+        );
         $user = $command->author();
-        if (!$this->commentPermissionService->canUserCommentTicket($user, $ticketId)) {
+        if (!$this->commentPermissionService->canUserCommentTicket($user, $ticket)) {
             throw PermissionException::withMessage('User cannot comment that ticket.');
         }
 
-        $ticket = $this->ticketRepository->getById($ticketId);
         $comment = $ticket->addComment(
             $this->commentRepository->nextIdentity(),
             new CommentContent($command->content()),
