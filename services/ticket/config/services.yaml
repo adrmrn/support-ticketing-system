@@ -53,12 +53,6 @@ services:
             $tokenService: '@Ticket\Infrastructure\Delivery\Api\Authenticator\TokenService'
         public: false
 
-    Ticket\Infrastructure\Domain\User\GuzzleUserRepository:
-        arguments:
-            $client: '@GuzzleHttp\Client'
-            $userServiceUri: '%user_microservice_rpc_uri%'
-            $xRpcAuthKey: '%user_microservice_x_rpc_auth_key%'
-
     ########## DOMAIN ##########
 
     Ticket\Domain\Category\CategoryRepository:

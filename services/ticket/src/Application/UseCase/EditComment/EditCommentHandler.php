@@ -9,7 +9,6 @@ use Ticket\Domain\Comment\CommentId;
 use Ticket\Domain\Comment\CommentPermissionService;
 use Ticket\Domain\Comment\CommentRepository;
 use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
-use Ticket\Domain\Ticket\TicketId;
 use Ticket\Domain\Ticket\TicketRepository;
 use Ticket\Domain\Ticket\TicketStatus;
 use Ticket\Domain\User\UserId;
@@ -32,9 +31,9 @@ class EditCommentHandler
 
     public function handle(EditCommentCommand $command): void
     {
-        $userId = UserId::fromString($command->executorId());
+        $user = $command->executor();
         $commentId = CommentId::fromString($command->commentId());
-        if (!$this->commentPermissionService->canUserManageComment($userId, $commentId)) {
+        if (!$this->commentPermissionService->canUserManageComment($user, $commentId)) {
             throw PermissionException::withMessage('User cannot edit that comment.');
         }
 

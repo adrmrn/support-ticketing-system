@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Ticket\Infrastructure\Delivery\Api\Authenticator;
 
 use Firebase\JWT\JWT;
-use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
+use Ticket\Domain\User\UserRole;
 use Ticket\Domain\User\UserId;
 
 class JwtTokenService implements TokenService
@@ -30,9 +30,10 @@ class JwtTokenService implements TokenService
     public function decodeUserFromToken(JwtUserToken $token): AuthenticatedUser
     {
         $payload = JWT::decode((string)$token, $this->secret, ['HS256']);
-        $userId = $payload->sub;
+
         return new AuthenticatedUser(
-            UserId::fromString($userId)
+            UserId::fromString($payload->sub),
+            UserRole::fromString($payload->account_type)
         );
     }
 }

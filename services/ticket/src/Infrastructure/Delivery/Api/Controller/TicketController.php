@@ -36,7 +36,7 @@ class TicketController extends AbstractController
             $request->get('title'),
             $request->get('description'),
             $request->get('categoryId'),
-            (string)$authenticatedUser->id()
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 
@@ -57,7 +57,7 @@ class TicketController extends AbstractController
             $request->get('title'),
             $request->get('description'),
             $request->get('categoryId'),
-            (string)$authenticatedUser->id()
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 
@@ -70,7 +70,7 @@ class TicketController extends AbstractController
         $authenticatedUser = $this->getUser();
         $command = new ResolveTicketCommand(
             $ticketId,
-            (string)$authenticatedUser->id()
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 

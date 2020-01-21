@@ -33,7 +33,7 @@ class CategoryController extends AbstractController
         $authenticatedUser = $this->getUser();
         $command = new CreateCategoryCommand(
             $request->get('name'),
-            (string)$authenticatedUser->id()
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 
@@ -52,7 +52,7 @@ class CategoryController extends AbstractController
         $command = new EditCategoryCommand(
             $categoryId,
             $request->get('name'),
-            (string)$authenticatedUser->id()
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 

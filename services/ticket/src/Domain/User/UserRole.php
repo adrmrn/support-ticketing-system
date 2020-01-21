@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Ticket\Domain\User;
 
+use Ticket\Domain\Exception\UnsupportedUserRole;
+
 final class UserRole
 {
     private const CUSTOMER = 'customer';
@@ -23,6 +25,26 @@ final class UserRole
     public static function admin(): UserRole
     {
         return new self(self::ADMIN);
+    }
+
+    /**
+     * @param string $role
+     * @return UserRole
+     * @throws UnsupportedUserRole
+     */
+    public static function fromString(string $role): UserRole
+    {
+        switch ($role) {
+            case self::ADMIN:
+                return new self(self::ADMIN);
+                break;
+
+            case self::CUSTOMER:
+                return new self(self::CUSTOMER);
+                break;
+        }
+
+        throw UnsupportedUserRole::withRole($role);
     }
 
     public function equals(UserRole $role): bool

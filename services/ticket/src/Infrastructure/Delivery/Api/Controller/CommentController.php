@@ -35,7 +35,7 @@ class CommentController extends AbstractController
         $command = new AddCommentCommand(
             $request->get('ticketId'),
             $request->get('content'),
-            (string)$authenticatedUser->id(),
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 
@@ -54,7 +54,7 @@ class CommentController extends AbstractController
         $command = new EditCommentCommand(
             $commentId,
             $request->get('content'),
-            (string)$authenticatedUser->id(),
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 
@@ -67,7 +67,7 @@ class CommentController extends AbstractController
         $authenticatedUser = $this->getUser();
         $command = new RemoveCommentCommand(
             $commentId,
-            (string)$authenticatedUser->id()
+            $authenticatedUser
         );
         $this->commandBus->handle($command);
 

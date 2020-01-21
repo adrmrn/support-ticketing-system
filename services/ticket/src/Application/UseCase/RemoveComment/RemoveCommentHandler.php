@@ -31,9 +31,9 @@ class RemoveCommentHandler
 
     public function handle(RemoveCommentCommand $command): void
     {
-        $userId = UserId::fromString($command->executorId());
+        $user = $command->executor();
         $commentId = CommentId::fromString($command->commentId());
-        if (!$this->commentPermissionService->canUserManageComment($userId, $commentId)) {
+        if (!$this->commentPermissionService->canUserManageComment($user, $commentId)) {
             throw PermissionException::withMessage('User cannot manage that comment.');
         }
 

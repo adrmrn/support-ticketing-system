@@ -3,17 +3,19 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\EditComment;
 
+use Ticket\Domain\User\User;
+
 class EditCommentCommand
 {
     private string $commentId;
     private string $content;
-    private string $executorId;
+    private User $executor;
 
-    public function __construct(string $commentId, string $content, string $executorId)
+    public function __construct(string $commentId, string $content, User $executor)
     {
         $this->commentId = $commentId;
         $this->content = $content;
-        $this->executorId = $executorId;
+        $this->executor = $executor;
     }
 
     public function commentId(): string
@@ -26,8 +28,8 @@ class EditCommentCommand
         return $this->content;
     }
 
-    public function executorId(): string
+    public function executor(): User
     {
-        return $this->executorId;
+        return $this->executor;
     }
 }

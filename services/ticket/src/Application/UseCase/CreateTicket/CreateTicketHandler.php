@@ -32,8 +32,8 @@ class CreateTicketHandler
 
     public function handle(CreateTicketCommand $command): void
     {
-        $userId = UserId::fromString($command->authorId());
-        if (!$this->ticketPermissionService->canUserCreateTicket($userId)) {
+        $user = $command->author();
+        if (!$this->ticketPermissionService->canUserCreateTicket($user)) {
             throw PermissionException::withMessage('User cannot create ticket.');
         }
 
@@ -45,7 +45,7 @@ class CreateTicketHandler
             new TicketTitle($command->title()),
             new TicketDescription($command->description()),
             $category->id(),
-            UserId::fromString($command->authorId())
+            $user->id()
         );
         $this->ticketRepository->add($ticket);
     }

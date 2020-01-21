@@ -31,9 +31,9 @@ class EditTicketHandler
 
     public function handle(EditTicketCommand $command): void
     {
-        $userId = UserId::fromString($command->executorId());
+        $user = $command->executor();
         $ticketId = TicketId::fromString($command->ticketId());
-        if (!$this->ticketPermissionService->canUserManageTicket($userId, $ticketId)) {
+        if (!$this->ticketPermissionService->canUserManageTicket($user, $ticketId)) {
             throw PermissionException::withMessage('User cannot edit that ticket.');
         }
 

@@ -3,17 +3,19 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\AddComment;
 
+use Ticket\Domain\User\User;
+
 class AddCommentCommand
 {
     private string $ticketId;
     private string $content;
-    private string $authorId;
+    private User $author;
 
-    public function __construct(string $ticketId, string $content, string $authorId)
+    public function __construct(string $ticketId, string $content, User $author)
     {
         $this->ticketId = $ticketId;
         $this->content = $content;
-        $this->authorId = $authorId;
+        $this->author = $author;
     }
 
     public function ticketId(): string
@@ -26,8 +28,8 @@ class AddCommentCommand
         return $this->content;
     }
 
-    public function authorId(): string
+    public function author(): User
     {
-        return $this->authorId;
+        return $this->author;
     }
 }

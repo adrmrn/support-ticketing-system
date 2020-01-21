@@ -3,15 +3,17 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\RemoveComment;
 
+use Ticket\Domain\User\User;
+
 class RemoveCommentCommand
 {
     private string $commentId;
-    private string $executorId;
+    private User $executor;
 
-    public function __construct(string $commentId, string $executorId)
+    public function __construct(string $commentId, User $executor)
     {
         $this->commentId = $commentId;
-        $this->executorId = $executorId;
+        $this->executor = $executor;
     }
 
     public function commentId(): string
@@ -19,8 +21,8 @@ class RemoveCommentCommand
         return $this->commentId;
     }
 
-    public function executorId(): string
+    public function executor(): User
     {
-        return $this->executorId;
+        return $this->executor;
     }
 }

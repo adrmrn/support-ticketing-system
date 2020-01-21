@@ -3,15 +3,17 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\CreateCategory;
 
+use Ticket\Domain\User\User;
+
 class CreateCategoryCommand
 {
     private string $name;
-    private string $authorId;
+    private User $author;
 
-    public function __construct(string $name, string $authorId)
+    public function __construct(string $name, User $author)
     {
         $this->name = $name;
-        $this->authorId = $authorId;
+        $this->author = $author;
     }
 
     public function name(): string
@@ -19,8 +21,8 @@ class CreateCategoryCommand
         return $this->name;
     }
 
-    public function authorId(): string
+    public function author(): User
     {
-        return $this->authorId;
+        return $this->author;
     }
 }

@@ -3,26 +3,28 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\EditTicket;
 
+use Ticket\Domain\User\User;
+
 class EditTicketCommand
 {
     private string $ticketId;
     private string $title;
     private string $description;
     private string $categoryId;
-    private string $executorId;
+    private User $executor;
 
     public function __construct(
         string $ticketId,
         string $title,
         string $description,
         string $categoryId,
-        string $executorId
+        User $executor
     ) {
         $this->ticketId = $ticketId;
         $this->title = $title;
         $this->description = $description;
         $this->categoryId = $categoryId;
-        $this->executorId = $executorId;
+        $this->executor = $executor;
     }
 
     public function ticketId(): string
@@ -45,8 +47,8 @@ class EditTicketCommand
         return $this->categoryId;
     }
 
-    public function executorId(): string
+    public function executor(): User
     {
-        return $this->executorId;
+        return $this->executor;
     }
 }

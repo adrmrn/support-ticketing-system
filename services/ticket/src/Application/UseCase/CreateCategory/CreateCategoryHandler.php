@@ -8,7 +8,6 @@ use Ticket\Domain\Category\Category;
 use Ticket\Domain\Category\CategoryName;
 use Ticket\Domain\Category\CategoryPermissionService;
 use Ticket\Domain\Category\CategoryRepository;
-use Ticket\Domain\User\UserId;
 
 class CreateCategoryHandler
 {
@@ -29,8 +28,8 @@ class CreateCategoryHandler
      */
     public function handle(CreateCategoryCommand $command): void
     {
-        $userId = UserId::fromString($command->authorId());
-        if (!$this->categoryPermissionService->canUserManageCategory($userId)) {
+        $user = $command->author();
+        if (!$this->categoryPermissionService->canUserManageCategory($user)) {
             throw PermissionException::withMessage('User cannot create new category.');
         }
 

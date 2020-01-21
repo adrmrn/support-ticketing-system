@@ -30,8 +30,8 @@ class AddCommentHandler
     public function handle(AddCommentCommand $command): void
     {
         $ticketId = TicketId::fromString($command->ticketId());
-        $userId = UserId::fromString($command->authorId());
-        if (!$this->commentPermissionService->canUserCommentTicket($userId, $ticketId)) {
+        $user = $command->author();
+        if (!$this->commentPermissionService->canUserCommentTicket($user, $ticketId)) {
             throw PermissionException::withMessage('User cannot comment that ticket.');
         }
 
@@ -39,7 +39,7 @@ class AddCommentHandler
         $comment = $ticket->addComment(
             $this->commentRepository->nextIdentity(),
             new CommentContent($command->content()),
-            UserId::fromString($command->authorId())
+            $user->id()
         );
         $this->commentRepository->add($comment);
     }

@@ -3,17 +3,19 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\EditCategory;
 
+use Ticket\Domain\User\User;
+
 class EditCategoryCommand
 {
     private string $categoryId;
     private string $name;
-    private string $executorId;
+    private User $executor;
 
-    public function __construct(string $categoryId, string $name, string $executorId)
+    public function __construct(string $categoryId, string $name, User $executor)
     {
         $this->categoryId = $categoryId;
         $this->name = $name;
-        $this->executorId = $executorId;
+        $this->executor = $executor;
     }
 
     public function categoryId(): string
@@ -26,8 +28,8 @@ class EditCategoryCommand
         return $this->name;
     }
 
-    public function executorId(): string
+    public function executor(): User
     {
-        return $this->executorId;
+        return $this->executor;
     }
 }

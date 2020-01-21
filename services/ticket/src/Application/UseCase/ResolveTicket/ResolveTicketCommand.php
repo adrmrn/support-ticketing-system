@@ -3,15 +3,17 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\ResolveTicket;
 
+use Ticket\Domain\User\User;
+
 class ResolveTicketCommand
 {
     private string $ticketId;
-    private string $executorId;
+    private User $executor;
 
-    public function __construct(string $ticketId, string $executorId)
+    public function __construct(string $ticketId, User $executor)
     {
         $this->ticketId = $ticketId;
-        $this->executorId = $executorId;
+        $this->executor = $executor;
     }
 
     public function ticketId(): string
@@ -19,8 +21,8 @@ class ResolveTicketCommand
         return $this->ticketId;
     }
 
-    public function executorId(): string
+    public function executor(): User
     {
-        return $this->executorId;
+        return $this->executor;
     }
 }

@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 namespace Ticket\Application\UseCase\CreateTicket;
 
+use Ticket\Domain\User\User;
+
 class CreateTicketCommand
 {
     private string $title;
     private string $description;
     private string $categoryId;
-    private string $authorId;
+    private User $author;
 
-    public function __construct(string $title, string $description, string $categoryId, string $authorId)
+    public function __construct(string $title, string $description, string $categoryId, User $author)
     {
         $this->title = $title;
         $this->description = $description;
         $this->categoryId = $categoryId;
-        $this->authorId = $authorId;
+        $this->author = $author;
     }
 
     public function title(): string
@@ -33,8 +35,8 @@ class CreateTicketCommand
         return $this->categoryId;
     }
 
-    public function authorId(): string
+    public function author(): User
     {
-        return $this->authorId;
+        return $this->author;
     }
 }

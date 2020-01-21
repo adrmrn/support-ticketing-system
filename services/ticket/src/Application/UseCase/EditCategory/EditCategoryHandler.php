@@ -25,8 +25,8 @@ class EditCategoryHandler
 
     public function handle(EditCategoryCommand $command): void
     {
-        $userId = UserId::fromString($command->executorId());
-        if (!$this->categoryPermissionService->canUserManageCategory($userId)) {
+        $user = $command->executor();
+        if (!$this->categoryPermissionService->canUserManageCategory($user)) {
             throw PermissionException::withMessage('User cannot edit category.');
         }
 
