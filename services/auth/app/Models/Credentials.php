@@ -8,12 +8,14 @@ class Credentials
     private UserId $userId;
     private Email $email;
     private HashedPassword $hashedPassword;
+    private AccountType $accountType;
 
-    public function __construct(UserId $userId, Email $email, HashedPassword $hashedPassword)
+    public function __construct(UserId $userId, Email $email, HashedPassword $hashedPassword, AccountType $accountType)
     {
         $this->userId = $userId;
         $this->email = $email;
         $this->hashedPassword = $hashedPassword;
+        $this->accountType = $accountType;
     }
 
     public function userId(): UserId
@@ -29,5 +31,10 @@ class Credentials
     public function hashedPassword(): HashedPassword
     {
         return $this->hashedPassword;
+    }
+
+    public function accountType(): AccountType
+    {
+        return $this->accountType;
     }
 }

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\UseCases\AuthorizeUser;
 
-use App\Exceptions\CredentialsNotFound;
 use App\Exceptions\InvalidCredentialsProvided;
 use App\Models\Email;
 use App\Models\Token;
@@ -40,8 +39,6 @@ class AuthorizeUser
             throw new InvalidCredentialsProvided();
         }
 
-        return $this->tokenService->generateTokenForUser(
-            $credentials->userId()
-        );
+        return $this->tokenService->generateTokenBasedOnCredentials($credentials);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Exceptions\CredentialsNotFound;
+use App\Models\AccountType;
 use App\Models\BcryptHashedPassword;
 use App\Models\Credentials;
 use App\Models\Email;
@@ -51,13 +52,14 @@ class MySqlCredentialsRepository implements CredentialsRepository
     {
         $query = $this->connection->prepare("
             INSERT INTO credentials
-            (user_id, email, hashed_password)
+            (user_id, email, hashed_password, account_type)
             VALUES
-            (:user_id, :email, :hashed_password)
+            (:user_id, :email, :hashed_password, :account_type)
         ");
         $query->bindValue(':user_id', (string)$credentials->userId());
         $query->bindValue(':email', (string)$credentials->email());
         $query->bindValue(':hashed_password', (string)$credentials->hashedPassword());
+        $query->bindValue(':account_type', (string)$credentials->accountType());
         $query->execute();
     }
 
@@ -66,7 +68,8 @@ class MySqlCredentialsRepository implements CredentialsRepository
         return new Credentials(
             UserId::fromString($rawData['user_id']),
             new Email($rawData['email']),
-            new BcryptHashedPassword($rawData['hashed_password'])
+            new BcryptHashedPassword($rawData['hashed_password']),
+            AccountType::fromString($rawData['account_type'])
         );
     }
 }

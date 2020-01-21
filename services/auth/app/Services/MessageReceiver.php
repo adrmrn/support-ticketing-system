@@ -38,7 +38,8 @@ class MessageReceiver
                 $event = new UserRegisteredEvent(
                     $externalEventBody['id'],
                     $externalEventBody['email'],
-                    $externalEventBody['hashedPassword']
+                    $externalEventBody['hashedPassword'],
+                    $externalEventBody['role']
                 );
                 break;
 

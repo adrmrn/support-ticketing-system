@@ -10,12 +10,14 @@ class UserRegisteredEvent implements Event
     private string $userId;
     private string $email;
     private string $hashedPassword;
+    private string $role;
 
-    public function __construct(string $userId, string $email, string $hashedPassword)
+    public function __construct(string $userId, string $email, string $hashedPassword, string $role)
     {
         $this->userId = $userId;
         $this->email = $email;
         $this->hashedPassword = $hashedPassword;
+        $this->role = $role;
     }
 
     public function userId(): string
@@ -31,5 +33,10 @@ class UserRegisteredEvent implements Event
     public function hashedPassword(): string
     {
         return $this->hashedPassword;
+    }
+
+    public function role(): string
+    {
+        return $this->role;
     }
 }

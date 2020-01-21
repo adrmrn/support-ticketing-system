@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Credentials;
 use App\Models\Token;
-use App\Models\UserId;
 use Firebase\JWT\JWT;
 
 class JwtService implements TokenService
@@ -20,11 +20,12 @@ class JwtService implements TokenService
         $this->expirationTimeInSeconds = $expirationTimeInMinutes;
     }
 
-    public function generateTokenForUser(UserId $userId): Token
+    public function generateTokenBasedOnCredentials(Credentials $credentials): Token
     {
         $payload = [
             'iss' => $this->issuer, // Issuer of the token
-            'sub' => (string)$userId, // Subject of the token
+            'sub' => (string)$credentials->userId(), // Subject of the token
+            'account_type' => (string)$credentials->accountType(),
             'iat' => time(), // Time when JWT was issued.
             'exp' => time() + 60 * 60 // Expiration time
         ];

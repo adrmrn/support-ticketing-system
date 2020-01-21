@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Events\UserRegistered;
 
 use App\Events\Handler;
+use App\Models\AccountType;
 use App\Models\BcryptHashedPassword;
 use App\Models\Credentials;
 use App\Models\Email;
@@ -29,7 +30,8 @@ class UserRegisteredHandler implements Handler
         $credentials = new Credentials(
             UserId::fromString($event->userId()),
             $email,
-            new BcryptHashedPassword($event->hashedPassword())
+            new BcryptHashedPassword($event->hashedPassword()),
+            AccountType::fromString($event->role())
         );
         $this->credentialsRepository->store($credentials);
     }
