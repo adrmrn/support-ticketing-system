@@ -57,10 +57,6 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
-
 $app->routeMiddleware([
     'transaction' => \User\Core\Infrastructure\Middleware\DoctrineTransactionMiddleware::class,
     'auth.rpc' => \User\Core\Infrastructure\Middleware\RpcApiKeyAuthenticationMiddleware::class,
@@ -78,9 +74,6 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\FactoriesProvider::class);
 $app->register(App\Providers\ContractsProvider::class);
 $app->register(App\Providers\DomainEventPublisherProvider::class);
