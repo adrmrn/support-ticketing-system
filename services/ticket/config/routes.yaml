@@ -8,6 +8,11 @@ editCategory:
     methods: PUT
     controller: Ticket\Infrastructure\Delivery\Api\Controller\CategoryController::editCategory
 
+removeCategory:
+    path: /api/category/{categoryId}
+    methods: DELETE
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\CategoryController::removeCategory
+
 createTicket:
     path: /api/ticket
     methods: POST

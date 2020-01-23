@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace Ticket\Domain\Ticket;
 
+use Ticket\Domain\Category\CategoryId;
 use Ticket\Domain\Exception\TicketNotFound;
 
 interface TicketRepository
 {
     public function nextIdentity(): TicketId;
+
     public function add(Ticket $ticket): void;
 
     /**
@@ -16,4 +18,10 @@ interface TicketRepository
      * @throws TicketNotFound
      */
     public function getById(TicketId $id): Ticket;
+
+    /**
+     * @param CategoryId $categoryId
+     * @return Ticket[]
+     */
+    public function getByCategory(CategoryId $categoryId): array;
 }

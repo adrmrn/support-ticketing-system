@@ -6,6 +6,7 @@ namespace Ticket\Infrastructure\Domain\Ticket;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Ramsey\Uuid\Uuid;
+use Ticket\Domain\Category\CategoryId;
 use Ticket\Domain\Exception\TicketNotFound;
 use Ticket\Domain\Ticket\Ticket;
 use Ticket\Domain\Ticket\TicketId;
@@ -43,5 +44,16 @@ class DoctrineTicketRepository implements TicketRepository
         }
 
         return $ticket;
+    }
+
+    /**
+     * @param CategoryId $categoryId
+     * @return Ticket[]
+     */
+    public function getByCategory(CategoryId $categoryId): array
+    {
+        return $this->repository->findBy([
+            'categoryId' => $categoryId
+        ]);
     }
 }

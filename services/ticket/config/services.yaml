@@ -137,3 +137,11 @@ services:
                 name: tactician.handler,
                 command: Ticket\Application\UseCase\RemoveComment\RemoveCommentCommand
             }
+
+    Ticket\Application\UseCase\RemoveCategory\RemoveCategoryHandler:
+        class: Ticket\Application\UseCase\RemoveCategory\RemoveCategoryHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\RemoveCategory\RemoveCategoryCommand
+            }

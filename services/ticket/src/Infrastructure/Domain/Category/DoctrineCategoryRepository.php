@@ -46,4 +46,9 @@ class DoctrineCategoryRepository implements CategoryRepository
         
         return $category;
     }
+
+    public function remove(Category $category): void
+    {
+        $this->entityManager->remove($category);
+    }
 }

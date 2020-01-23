@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Ticket\Application\Exception\ValidationException;
 use Ticket\Application\UseCase\CreateCategory\CreateCategoryCommand;
 use Ticket\Application\UseCase\EditCategory\EditCategoryCommand;
+use Ticket\Application\UseCase\RemoveCategory\RemoveCategoryCommand;
 use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateCategoryValidator;
 
@@ -57,5 +58,15 @@ class CategoryController extends AbstractController
         $this->commandBus->handle($command);
 
         return new JsonResponse(null, 201);
+    }
+
+    public function removeCategory(string $categoryId, Request $request): JsonResponse
+    {
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+        $command = new RemoveCategoryCommand($categoryId, $authenticatedUser);
+        $this->commandBus->handle($command);
+
+        return new JsonResponse(null, 204);
     }
 }

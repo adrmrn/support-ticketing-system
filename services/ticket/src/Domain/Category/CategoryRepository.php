@@ -16,4 +16,6 @@ interface CategoryRepository
      * @throws CategoryNotFound
      */
     public function getById(CategoryId $id): Category;
+
+    public function remove(Category $category): void;
 }
