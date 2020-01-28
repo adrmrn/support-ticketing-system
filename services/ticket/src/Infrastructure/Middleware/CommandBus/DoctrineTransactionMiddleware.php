@@ -5,14 +5,17 @@ namespace Ticket\Infrastructure\Middleware\CommandBus;
 
 use Doctrine\ORM\EntityManagerInterface;
 use League\Tactician\Middleware;
+use Ticket\Infrastructure\Persistence\Doctrine\EventSubscriber\DoctrineDomainEventCollector;
 
 class DoctrineTransactionMiddleware implements Middleware
 {
     private EntityManagerInterface $entityManager;
+    private DoctrineDomainEventCollector $domainEventCollector;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, DoctrineDomainEventCollector $domainEventCollector)
     {
         $this->entityManager = $entityManager;
+        $this->domainEventCollector = $domainEventCollector;
     }
 
     /**
@@ -26,6 +29,7 @@ class DoctrineTransactionMiddleware implements Middleware
             $result = $next($command);
 
             $this->entityManager->flush();
+            $this->domainEventCollector->dispatchRaisedEvents();
             $this->entityManager->commit();
         } catch (\Exception $exception) {
             $this->entityManager->rollback();

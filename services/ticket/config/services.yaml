@@ -53,6 +53,10 @@ services:
             $tokenService: '@Ticket\Infrastructure\Delivery\Api\Authenticator\TokenService'
         public: false
 
+    Ticket\Infrastructure\Persistence\Doctrine\EventSubscriber\DoctrineDomainEventCollector:
+        tags:
+            - { name: doctrine.event_subscriber }
+
     ########## DOMAIN ##########
 
     Ticket\Domain\Category\CategoryRepository:
@@ -63,6 +67,15 @@ services:
 
     Ticket\Domain\Comment\CommentRepository:
         class: Ticket\Infrastructure\Domain\Comment\DoctrineCommentRepository
+
+    Ticket\Domain\Event\EventStore:
+        class: Ticket\Infrastructure\Domain\Event\DoctrineEventStore
+
+    Ticket\Domain\Event\DomainEventDispatcher:
+        calls:
+            - method: subscribe
+              arguments:
+                  - '@Ticket\Infrastructure\Domain\Event\PersistDomainEventSubscriber'
 
     ########## APPLICATION ##########
 

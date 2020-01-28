@@ -11,6 +11,7 @@ use Ticket\Application\Exception\ValidationException;
 use Ticket\Application\UseCase\CreateCategory\CreateCategoryCommand;
 use Ticket\Application\UseCase\EditCategory\EditCategoryCommand;
 use Ticket\Application\UseCase\RemoveCategory\RemoveCategoryCommand;
+use Ticket\Domain\Event\DomainEventDispatcher;
 use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateCategoryValidator;
 

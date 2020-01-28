@@ -27,6 +27,11 @@ final class CategoryName
         $this->name = $name;
     }
 
+    public function equals(CategoryName $name): bool
+    {
+        return $this->name === $name->name;
+    }
+
     public function __toString(): string
     {
         return $this->name;
