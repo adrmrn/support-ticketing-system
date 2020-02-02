@@ -8,5 +8,6 @@ interface DomainEvent
     public function aggregateId(): string;
     public function occurredOn(): \DateTimeInterface;
     public function version(): int;
+    public function data(): array;
     public function dataAsJson(): string;
 }

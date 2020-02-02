@@ -5,10 +5,12 @@
         "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "firebase/php-jwt": "^5.0",
         "guzzlehttp/guzzle": "^6.5",
         "league/tactician": "^1.0",
         "league/tactician-bundle": "^1.1",
+        "mongodb/mongodb": "^1.5",
         "ramsey/uuid": "^3.9",
         "ramsey/uuid-doctrine": "^1.5",
         "symfony-bundles/json-request-bundle": "^3.0",
@@ -19,8 +21,7 @@
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
         "symfony/validator": "5.0.*",
-        "symfony/yaml": "5.0.*",
-        "ext-json": "*"
+        "symfony/yaml": "5.0.*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0"

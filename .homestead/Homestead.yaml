@@ -33,5 +33,6 @@ features:
     - ohmyzsh: false
     - webdriver: false
     - rabbitmq: true
+    - mongodb: true
 name: support-ticketing-system
 hostname: support-ticketing-system

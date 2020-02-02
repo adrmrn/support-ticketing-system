@@ -36,11 +36,16 @@ class CategoryCreated implements DomainEvent
         return 0;
     }
 
-    public function dataAsJson(): string
+    public function data(): array
     {
-        return \json_encode([
+        return [
             'id' => (string)$this->categoryId,
             'name' => (string)$this->name
-        ]);
+        ];
+    }
+
+    public function dataAsJson(): string
+    {
+        return \json_encode($this->data());
     }
 }

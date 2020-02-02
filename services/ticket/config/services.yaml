@@ -4,9 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    jwt_secret: 'very-strong-secret'
+    jwt_secret: 'very-strong-secret' # TODO: get from environment
     user_microservice_rpc_uri: 'http://user.sts.app/rpc'
-    user_microservice_x_rpc_auth_key: 'm6dKMgAdn4VHyPKyqCCssFxnFVAvmmW6RAg4hhG4K4cJhnG7qJYgQV3Vg3Q2'
+    user_microservice_x_rpc_auth_key: 'm6dKMgAdn4VHyPKyqCCssFxnFVAvmmW6RAg4hhG4K4cJhnG7qJYgQV3Vg3Q2' # TODO: get from environment
+    mongodb_url: '%env(string:MONGODB_URL)%'
+    mongodb_database: '%env(string:MONGODB_DATABASE)%'
 
 services:
     # default configuration for services in *this* file
@@ -24,6 +26,11 @@ services:
 
     GuzzleHttp\Client:
         class: 'GuzzleHttp\Client'
+
+    MongoDB\Client:
+        arguments:
+            $uri: '%mongodb_url%'
+            $uriOptions: { authSource: 'admin' }
 
     Ticket\Infrastructure\Event\EventListener\Symfony\ExceptionListener:
         tags:
@@ -57,6 +64,20 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    Ticket\Infrastructure\Projection\Projector:
+        calls:
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Category\CategoryCreatedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Category\CategoryNameChangedProjection'
+
+    Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient:
+        arguments:
+            $client: '@MongoDB\Client'
+            $database: '%mongodb_database%'
+
     ########## DOMAIN ##########
 
     Ticket\Domain\Category\CategoryRepository:
@@ -68,6 +89,9 @@ services:
     Ticket\Domain\Comment\CommentRepository:
         class: Ticket\Infrastructure\Domain\Comment\DoctrineCommentRepository
 
+    Ticket\Domain\Category\CategoryViewRepository:
+        class: Ticket\Infrastructure\Domain\Category\MongoDbCategoryViewRepository
+
     Ticket\Domain\Event\EventStore:
         class: Ticket\Infrastructure\Domain\Event\DoctrineEventStore
 
@@ -76,6 +100,9 @@ services:
             - method: subscribe
               arguments:
                   - '@Ticket\Infrastructure\Domain\Event\PersistDomainEventSubscriber'
+            - method: subscribe
+              arguments:
+                  - '@Ticket\Infrastructure\Domain\Event\ProjectDomainEventSubscriber'
 
     ########## APPLICATION ##########
 

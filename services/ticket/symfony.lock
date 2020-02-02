@@ -111,6 +111,9 @@
     "league/tactician-logger": {
         "version": "v0.10.0"
     },
+    "mongodb/mongodb": {
+        "version": "1.5.2"
+    },
     "myclabs/deep-copy": {
         "version": "1.9.4"
     },
