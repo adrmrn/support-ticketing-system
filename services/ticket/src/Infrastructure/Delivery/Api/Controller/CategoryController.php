@@ -8,20 +8,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Ticket\Application\Exception\ValidationException;
+use Ticket\Application\Query\GetCategories\GetCategoriesQuery;
 use Ticket\Application\UseCase\CreateCategory\CreateCategoryCommand;
 use Ticket\Application\UseCase\EditCategory\EditCategoryCommand;
 use Ticket\Application\UseCase\RemoveCategory\RemoveCategoryCommand;
+use Ticket\Domain\Category\CategoryView;
 use Ticket\Domain\Event\DomainEventDispatcher;
 use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateCategoryValidator;
+use Ticket\Shared\Application\QueryBus;
 
 class CategoryController extends AbstractController
 {
     private CommandBus $commandBus;
+    private QueryBus $queryBus;
 
-    public function __construct(CommandBus $commandBus)
+    public function __construct(CommandBus $commandBus, QueryBus $queryBus)
     {
         $this->commandBus = $commandBus;
+        $this->queryBus = $queryBus;
     }
 
     public function createCategory(Request $request): JsonResponse
@@ -40,6 +45,19 @@ class CategoryController extends AbstractController
         $this->commandBus->handle($command);
 
         return new JsonResponse(null, 201);
+    }
+
+    public function getCategories(Request $request): JsonResponse
+    {
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+        $query = new GetCategoriesQuery($authenticatedUser);
+        $categories = $this->queryBus->handle($query);
+
+        return new JsonResponse(
+            array_map(fn(CategoryView $category) => $category->asArray(), $categories),
+            200
+        );
     }
 
     public function editCategory(string $categoryId, Request $request): JsonResponse

@@ -106,6 +106,14 @@ services:
 
     ########## APPLICATION ##########
 
+    Ticket\Shared\Application\QueryBus:
+        class: Ticket\Shared\Infrastructure\Application\SimpleQueryBus
+        calls:
+            - method: map
+              arguments:
+                  - 'Ticket\Application\Query\GetCategories\GetCategoriesQuery'
+                  - '@Ticket\Application\Query\GetCategories\GetCategoriesHandler'
+
     Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler:
         class: Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler
         tags:

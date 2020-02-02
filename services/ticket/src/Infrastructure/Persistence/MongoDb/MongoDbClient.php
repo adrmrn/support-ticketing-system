@@ -5,6 +5,7 @@ namespace Ticket\Infrastructure\Persistence\MongoDb;
 
 use MongoDB\Client;
 use MongoDB\Collection;
+use MongoDB\Model\BSONDocument;
 
 class MongoDbClient
 {
@@ -34,7 +35,10 @@ class MongoDbClient
         $collection = $this->collection($collectionName);
         $result = $collection->find($filter, $options);
 
-        return $result->toArray();
+        return array_map(
+            fn(BSONDocument $item) => $item->getArrayCopy(),
+            $result->toArray()
+        );
     }
 
     private function collection(string $collectionName): Collection
