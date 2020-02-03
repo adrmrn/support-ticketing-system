@@ -7,7 +7,7 @@ use Ticket\Domain\Category\CategoryId;
 
 final class CategoryIdMother
 {
-    public function create(string $categoryId): CategoryId
+    public static function create(string $categoryId): CategoryId
     {
         return CategoryId::fromString($categoryId);
     }
