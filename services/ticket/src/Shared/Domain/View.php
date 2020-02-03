@@ -5,5 +5,5 @@ namespace Ticket\Shared\Domain;
 
 interface View
 {
-    public function asArray(): array;
+    public function toArray(): array;
 }

@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Ticket\Domain\Category;
 
-class CategoryView
+use Ticket\Shared\Domain\View;
+
+class CategoryView implements View
 {
     private string $id;
     private string $name;
@@ -14,7 +16,7 @@ class CategoryView
         $this->name = $name;
     }
 
-    public function asArray(): array
+    public function toArray(): array
     {
         return [
             'id' => $this->id,

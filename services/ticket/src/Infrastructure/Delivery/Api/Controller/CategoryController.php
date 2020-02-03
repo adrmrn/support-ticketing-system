@@ -49,13 +49,11 @@ class CategoryController extends AbstractController
 
     public function getCategories(Request $request): JsonResponse
     {
-        /** @var AuthenticatedUser $authenticatedUser */
-        $authenticatedUser = $this->getUser();
-        $query = new GetCategoriesQuery($authenticatedUser);
+        $query = new GetCategoriesQuery();
         $categories = $this->queryBus->handle($query);
 
         return new JsonResponse(
-            array_map(fn(CategoryView $category) => $category->asArray(), $categories),
+            array_map(fn(CategoryView $category) => $category->toArray(), $categories),
             200
         );
     }
