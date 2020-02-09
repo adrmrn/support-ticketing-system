@@ -6,6 +6,8 @@ namespace Ticket\Infrastructure\Persistence\Doctrine\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Ticket\Domain\Category\Category;
+use Ticket\Domain\Category\Event\CategoryRemoved;
 use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Event\DomainEventDispatcher;
 use Ticket\Shared\Domain\Aggregate;
@@ -35,7 +37,10 @@ final class DoctrineDomainEventCollector implements EventSubscriber
 
     public function postRemove(LifecycleEventArgs $args): void
     {
-        $this->collectRaisedEvents($args);
+        $entity = $args->getObject();
+        if ($entity instanceof Category) {
+            $this->raisedEvents[] = new CategoryRemoved($entity->id());
+        }
     }
 
     private function collectRaisedEvents(LifecycleEventArgs $args): void

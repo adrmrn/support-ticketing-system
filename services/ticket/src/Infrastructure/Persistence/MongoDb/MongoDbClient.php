@@ -24,21 +24,27 @@ class MongoDbClient
         $collection->insertOne($data);
     }
 
-    public function update(string $collectionName, array $filter, array $data): void
+    public function update(string $collectionName, array $filters, array $data): void
     {
         $collection = $this->collection($collectionName);
-        $collection->updateOne($filter, ['$set' => $data]);
+        $collection->updateOne($filters, ['$set' => $data]);
     }
 
-    public function find(string $collectionName, array $filter = [], array $options = []): array
+    public function find(string $collectionName, array $filters = [], array $options = []): array
     {
         $collection = $this->collection($collectionName);
-        $result = $collection->find($filter, $options);
+        $result = $collection->find($filters, $options);
 
         return array_map(
             fn(BSONDocument $item) => $item->getArrayCopy(),
             $result->toArray()
         );
+    }
+
+    public function delete(string $collectionName, array $filters = []): void
+    {
+        $collection = $this->collection($collectionName);
+        $collection->deleteOne($filters);
     }
 
     private function collection(string $collectionName): Collection

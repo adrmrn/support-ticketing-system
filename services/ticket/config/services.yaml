@@ -72,6 +72,9 @@ services:
             - method: register
               arguments:
                   - '@Ticket\Infrastructure\Projection\MongoDb\Category\CategoryNameChangedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Category\CategoryRemovedProjection'
 
     Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient:
         arguments:
