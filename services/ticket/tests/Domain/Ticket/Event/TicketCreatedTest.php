@@ -21,10 +21,10 @@ class TicketCreatedTest extends TestCase
         $expectedAggregateId = 'ID-TICKET-0';
 
         // act
-        $categoryCreated = TicketCreatedMother::createWithParams([
+        $ticketCreated = TicketCreatedMother::createWithParams([
             'id' => TicketIdMother::create($expectedAggregateId)
         ]);
-        $aggregateId = $categoryCreated->aggregateId();
+        $aggregateId = $ticketCreated->aggregateId();
 
         // assert
         $this->assertEquals($expectedAggregateId, $aggregateId);
@@ -48,8 +48,8 @@ class TicketCreatedTest extends TestCase
     public function testVersion_HaveVersionAsDefault_ExpectedVersionOfEventReturned(): void
     {
         // act
-        $categoryCreated = TicketCreatedMother::createDefault();
-        $version = $categoryCreated->version();
+        $ticketCreated = TicketCreatedMother::createDefault();
+        $version = $ticketCreated->version();
 
         // assert
         $expectedVersion = 0;

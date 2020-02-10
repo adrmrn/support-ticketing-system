@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace Ticket\Domain\Comment;
 
+use Ticket\Domain\Comment\Event\CommentContentEdited;
+use Ticket\Domain\Comment\Event\CommentCreated;
 use Ticket\Domain\Ticket\TicketId;
 use Ticket\Domain\User\UserId;
+use Ticket\Shared\Domain\Aggregate;
 use Ticket\Shared\Domain\Calendar;
 
-class Comment
+class Comment extends Aggregate
 {
     private CommentId $id;
     private CommentContent $content;
@@ -22,11 +25,30 @@ class Comment
         $this->authorId = $authorId;
         $this->ticketId = $ticketId;
         $this->createdAt = Calendar::now();
+        $this->raiseEvent(
+            new CommentCreated(
+                $this->id(),
+                $this->content(),
+                $this->authorId(),
+                $this->ticketId(),
+                $this->createdAt()
+            )
+        );
     }
 
     public function edit(CommentContent $content): void
     {
+        if ($this->content()->equals($content)) {
+            return;
+        }
+
         $this->content = $content;
+        $this->raiseEvent(
+            new CommentContentEdited(
+                $this->id(),
+                $this->content()
+            )
+        );
     }
 
     public function id(): CommentId

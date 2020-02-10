@@ -70,4 +70,30 @@ class CommentContentTest extends TestCase
         // assert
         $this->assertSame($expectedContentAsString, $contentAsString);
     }
+
+    public function testEquals_HaveTwoSameContents_ReturnsTrue(): void
+    {
+        // arrange
+        $contentOne = CommentContentMother::create('Same content');
+        $contentTwo = CommentContentMother::create('Same content');
+
+        // act
+        $equals = $contentOne->equals($contentTwo);
+
+        // assert
+        $this->assertTrue($equals);
+    }
+
+    public function testEquals_HaveTwoDifferentContents_ReturnsFalse(): void
+    {
+        // arrange
+        $contentOne = CommentContentMother::create('Content one');
+        $contentTwo = CommentContentMother::create('Content two');
+
+        // act
+        $equals = $contentOne->equals($contentTwo);
+
+        // assert
+        $this->assertFalse($equals);
+    }
 }

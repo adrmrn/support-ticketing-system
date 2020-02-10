@@ -27,6 +27,11 @@ final class CommentContent
         $this->content = $content;
     }
 
+    public function equals(CommentContent $content): bool
+    {
+        return $this->content === $content->content;
+    }
+
     public function __toString(): string
     {
         return $this->content;
