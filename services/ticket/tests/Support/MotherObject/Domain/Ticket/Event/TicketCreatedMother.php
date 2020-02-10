@@ -9,6 +9,7 @@ use Ticket\Domain\Ticket\TicketDescription;
 use Ticket\Domain\Ticket\TicketId;
 use Ticket\Domain\Ticket\TicketTitle;
 use Ticket\Domain\User\UserId;
+use Ticket\Tests\Support\MotherObject\DateTimeMother;
 use Ticket\Tests\Support\MotherObject\Domain\Category\CategoryIdMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketDescriptionMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketIdMother;
@@ -22,9 +23,10 @@ class TicketCreatedMother
         TicketTitle $title,
         TicketDescription $description,
         CategoryId $categoryId,
-        UserId $authorId
+        UserId $authorId,
+        \DateTimeInterface $createdAt
     ): TicketCreated {
-        return new TicketCreated($id, $title, $description, $categoryId, $authorId);
+        return new TicketCreated($id, $title, $description, $categoryId, $authorId, $createdAt);
     }
 
     public static function createWithParams(array $params = []): TicketCreated
@@ -34,8 +36,9 @@ class TicketCreatedMother
         $description = $params['description'] ?? TicketDescriptionMother::createDefault();
         $categoryId = $params['category_id'] ?? CategoryIdMother::createDefault();
         $authorId = $params['author_id'] ?? UserIdMother::createDefault();
+        $createdAt = $params['created_at'] ?? DateTimeMother::createDefault();
 
-        return new TicketCreated($id, $title, $description, $categoryId, $authorId);
+        return new TicketCreated($id, $title, $description, $categoryId, $authorId, $createdAt);
     }
 
     public static function createDefault(): TicketCreated

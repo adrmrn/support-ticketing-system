@@ -74,6 +74,7 @@ class TicketTest extends TestCase
         $categoryId = CategoryIdMother::createDefault();
         $authorId = UserIdMother::createDefault();
         $createdAtAsString = '2020-01-01 10:00:01';
+        $createdAt = DateTimeMother::create($createdAtAsString);
         FakeCalendar::setFakeDate($createdAtAsString);
 
         // act
@@ -86,7 +87,14 @@ class TicketTest extends TestCase
         );
 
         // assert
-        $expectedRaisedEvent = TicketCreatedMother::create($id, $title, $description, $categoryId, $authorId);
+        $expectedRaisedEvent = TicketCreatedMother::create(
+            $id,
+            $title,
+            $description,
+            $categoryId,
+            $authorId,
+            $createdAt
+        );
         $this->assertEventRaised($expectedRaisedEvent, $ticket);
     }
 

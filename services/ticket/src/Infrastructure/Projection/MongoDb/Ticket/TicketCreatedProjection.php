@@ -33,6 +33,7 @@ class TicketCreatedProjection implements Projection
                 'description' => $event->data()['description'],
                 'category_id' => $event->data()['categoryId'],
                 'author_id' => $event->data()['authorId'],
+                'created_at' => $event->data()['createdAt'],
                 'status' => (string)TicketStatus::open()
             ]
         );

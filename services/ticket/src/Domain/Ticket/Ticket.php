@@ -49,7 +49,8 @@ class Ticket extends Aggregate
                 $this->title(),
                 $this->description(),
                 $this->categoryId(),
-                $this->authorId()
+                $this->authorId(),
+                $this->createdAt()
             )
         );
     }

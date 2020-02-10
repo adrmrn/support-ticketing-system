@@ -18,6 +18,7 @@ class TicketCreated implements DomainEvent
     private TicketDescription $description;
     private CategoryId $categoryId;
     private UserId $authorId;
+    private \DateTimeInterface $createdAt;
     private \DateTimeInterface $occurredOn;
 
     public function __construct(
@@ -25,13 +26,15 @@ class TicketCreated implements DomainEvent
         TicketTitle $title,
         TicketDescription $description,
         CategoryId $categoryId,
-        UserId $authorId
+        UserId $authorId,
+        \DateTimeInterface $createdAt
     ) {
         $this->ticketId = $ticketId;
         $this->title = $title;
         $this->description = $description;
         $this->categoryId = $categoryId;
         $this->authorId = $authorId;
+        $this->createdAt = $createdAt;
         $this->occurredOn = Calendar::now();
     }
 
@@ -57,7 +60,8 @@ class TicketCreated implements DomainEvent
             'title' => (string)$this->title,
             'description' => (string)$this->description,
             'categoryId' => (string)$this->categoryId,
-            'authorId' => (string)$this->authorId
+            'authorId' => (string)$this->authorId,
+            'createdAt' => $this->createdAt->format(Calendar::DEFAULT_DATE_FORMAT)
         ];
     }
 

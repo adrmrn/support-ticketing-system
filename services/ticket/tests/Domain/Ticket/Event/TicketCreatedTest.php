@@ -5,6 +5,7 @@ namespace Ticket\Tests\Domain\Ticket\Event;
 
 use PHPUnit\Framework\TestCase;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
+use Ticket\Tests\Support\MotherObject\DateTimeMother;
 use Ticket\Tests\Support\MotherObject\Domain\Category\CategoryIdMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketCreatedMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketDescriptionMother;
@@ -63,6 +64,7 @@ class TicketCreatedTest extends TestCase
         $description = 'Ticket example description';
         $categoryId = 'ID-CATEGORY-0';
         $authorId = 'ID-USER-0';
+        $createdAt = '2020-01-01 10:00:50';
 
         // act
         $ticketCreated = TicketCreatedMother::createWithParams([
@@ -70,7 +72,8 @@ class TicketCreatedTest extends TestCase
             'title' => TicketTitleMother::create($title),
             'description' => TicketDescriptionMother::create($description),
             'category_id' => CategoryIdMother::create($categoryId),
-            'author_id' => UserIdMother::create($authorId)
+            'author_id' => UserIdMother::create($authorId),
+            'created_at' => DateTimeMother::create($createdAt)
         ]);
         $data = $ticketCreated->data();
 
@@ -80,7 +83,8 @@ class TicketCreatedTest extends TestCase
             'title' => 'Ticket example title',
             'description' => 'Ticket example description',
             'categoryId' => 'ID-CATEGORY-0',
-            'authorId' => 'ID-USER-0'
+            'authorId' => 'ID-USER-0',
+            'createdAt' => '2020-01-01 10:00:50'
         ];
         $this->assertEquals($expectedData, $data);
     }
@@ -93,6 +97,7 @@ class TicketCreatedTest extends TestCase
         $description = 'Ticket example description';
         $categoryId = 'ID-CATEGORY-0';
         $authorId = 'ID-USER-0';
+        $createdAt = '2020-01-01 10:00:50';
 
         // act
         $ticketCreated = TicketCreatedMother::createWithParams([
@@ -100,7 +105,8 @@ class TicketCreatedTest extends TestCase
             'title' => TicketTitleMother::create($title),
             'description' => TicketDescriptionMother::create($description),
             'category_id' => CategoryIdMother::create($categoryId),
-            'author_id' => UserIdMother::create($authorId)
+            'author_id' => UserIdMother::create($authorId),
+            'created_at' => DateTimeMother::create($createdAt)
         ]);
         $dataAsJson = $ticketCreated->dataAsJson();
 
@@ -110,7 +116,8 @@ class TicketCreatedTest extends TestCase
             "title": "Ticket example title",
             "description": "Ticket example description",
             "categoryId": "ID-CATEGORY-0",
-            "authorId": "ID-USER-0"
+            "authorId": "ID-USER-0",
+            "createdAt": "2020-01-01 10:00:50"
         }';
         $this->assertJsonStringEqualsJsonString($expectedDataAsJson, $dataAsJson);
     }

@@ -5,6 +5,7 @@ namespace Ticket\Shared\Domain;
 
 class Calendar
 {
+    public const DEFAULT_DATE_FORMAT = 'Y-m-d H:i:s';
     protected static ?CalendarProvider $calendarProvider = null;
 
     public static function now(): \DateTimeInterface
