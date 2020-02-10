@@ -9,11 +9,17 @@ use Ticket\Domain\Comment\CommentContent;
 use Ticket\Domain\Comment\CommentId;
 use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
 use Ticket\Domain\Exception\ResolvedTicketCannotBeClosed;
-use Ticket\Domain\Exception\TicketIsAlreadyResolved;
+use Ticket\Domain\Ticket\Event\TicketCategoryChanged;
+use Ticket\Domain\Ticket\Event\TicketClosed;
+use Ticket\Domain\Ticket\Event\TicketCreated;
+use Ticket\Domain\Ticket\Event\TicketDescribed;
+use Ticket\Domain\Ticket\Event\TicketResolved;
+use Ticket\Domain\Ticket\Event\TicketTitleChanged;
 use Ticket\Domain\User\UserId;
+use Ticket\Shared\Domain\Aggregate;
 use Ticket\Shared\Domain\Calendar;
 
-class Ticket
+class Ticket extends Aggregate
 {
     private TicketId $id;
     private TicketTitle $title;
@@ -37,6 +43,15 @@ class Ticket
         $this->authorId = $authorId;
         $this->status = TicketStatus::open();
         $this->createdAt = Calendar::now();
+        $this->raiseEvent(
+            new TicketCreated(
+                $this->id(),
+                $this->title(),
+                $this->description(),
+                $this->categoryId(),
+                $this->authorId()
+            )
+        );
     }
 
     /**
@@ -49,7 +64,17 @@ class Ticket
             throw LockedTicketCannotBeChanged::withTicketId($this->id());
         }
 
+        if ($this->title()->equals($title)) {
+            return;
+        }
+
         $this->title = $title;
+        $this->raiseEvent(
+            new TicketTitleChanged(
+                $this->id(),
+                $this->title()
+            )
+        );
     }
 
     /**
@@ -62,7 +87,17 @@ class Ticket
             throw LockedTicketCannotBeChanged::withTicketId($this->id());
         }
 
+        if ($this->description()->equals($description)) {
+            return;
+        }
+
         $this->description = $description;
+        $this->raiseEvent(
+            new TicketDescribed(
+                $this->id(),
+                $this->description()
+            )
+        );
     }
 
     public function changeCategory(CategoryId $categoryId): void
@@ -71,16 +106,31 @@ class Ticket
             throw LockedTicketCannotBeChanged::withTicketId($this->id());
         }
 
+        if ($this->categoryId()->equals($categoryId)) {
+            return;
+        }
+
         $this->categoryId = $categoryId;
+        $this->raiseEvent(
+            new TicketCategoryChanged(
+                $this->id(),
+                $this->categoryId()
+            )
+        );
     }
 
     public function resolve(): void
     {
         if ($this->status()->equals(TicketStatus::resolved())) {
-            throw TicketIsAlreadyResolved::withTicketId($this->id());
+            return;
         }
 
         $this->status = TicketStatus::resolved();
+        $this->raiseEvent(
+            new TicketResolved(
+                $this->id()
+            )
+        );
     }
 
     /**
@@ -92,7 +142,16 @@ class Ticket
             throw ResolvedTicketCannotBeClosed::withTicketId($this->id());
         }
 
+        if ($this->status()->equals(TicketStatus::closed())) {
+            return;
+        }
+
         $this->status = TicketStatus::closed();
+        $this->raiseEvent(
+            new TicketClosed(
+                $this->id()
+            )
+        );
     }
 
     /**

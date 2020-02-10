@@ -27,6 +27,11 @@ final class TicketDescription
         $this->description = $description;
     }
 
+    public function equals(TicketDescription $description): bool
+    {
+        return $this->description === $description->description;
+    }
+
     public function __toString(): string
     {
         return $this->description;

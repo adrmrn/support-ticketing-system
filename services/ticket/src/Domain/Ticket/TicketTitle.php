@@ -27,6 +27,11 @@ final class TicketTitle
         $this->title = $title;
     }
 
+    public function equals(TicketTitle $title): bool
+    {
+        return $this->title === $title->title;
+    }
+
     public function __toString(): string
     {
         return $this->title;

@@ -70,4 +70,30 @@ class CategoryNameTest extends TestCase
         // assert
         $this->assertSame($expectedNameAsString, $nameAsString);
     }
+
+    public function testEquals_HaveTwoSameNames_ReturnsTrue(): void
+    {
+        // arrange
+        $nameOne = CategoryNameMother::create('Same name');
+        $nameTwo = CategoryNameMother::create('Same name');
+
+        // act
+        $equals = $nameOne->equals($nameTwo);
+
+        // assert
+        $this->assertTrue($equals);
+    }
+
+    public function testEquals_HaveTwoDifferentNames_ReturnsFalse(): void
+    {
+        // arrange
+        $nameOne = CategoryNameMother::create('Name one');
+        $nameTwo = CategoryNameMother::create('Name two');
+
+        // act
+        $equals = $nameOne->equals($nameTwo);
+
+        // assert
+        $this->assertFalse($equals);
+    }
 }

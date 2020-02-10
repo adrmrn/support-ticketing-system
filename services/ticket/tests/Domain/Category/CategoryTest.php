@@ -83,9 +83,10 @@ class CategoryTest extends TestCase
     public function testRename_HaveSameOldAndNewName_CategoryChangedEventNotRaised(): void
     {
         // arrange
-        $id = CategoryIdMother::createDefault();
         $oldName = CategoryNameMother::create('Category name');
-        $category = CategoryMother::create($id, $oldName);
+        $category = CategoryMother::createWithParams([
+            'name' => $oldName
+        ]);
         $newName = CategoryNameMother::create('Category name');
 
         // act

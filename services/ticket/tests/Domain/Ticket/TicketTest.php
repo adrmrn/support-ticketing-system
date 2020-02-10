@@ -4,15 +4,27 @@ declare(strict_types=1);
 namespace Ticket\Tests\Domain\Ticket;
 
 use PHPUnit\Framework\TestCase;
+use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
 use Ticket\Domain\Exception\ResolvedTicketCannotBeClosed;
-use Ticket\Domain\Exception\TicketIsAlreadyResolved;
+use Ticket\Domain\Ticket\Event\TicketCategoryChanged;
+use Ticket\Domain\Ticket\Event\TicketClosed;
+use Ticket\Domain\Ticket\Event\TicketDescribed;
+use Ticket\Domain\Ticket\Event\TicketResolved;
+use Ticket\Domain\Ticket\Event\TicketTitleChanged;
+use Ticket\Domain\Ticket\Ticket;
 use Ticket\Domain\Ticket\TicketStatus;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\DateTimeMother;
 use Ticket\Tests\Support\MotherObject\Domain\Category\CategoryIdMother;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\CommentContentMother;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\CommentIdMother;
+use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketCategoryChangedMother;
+use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketClosedMother;
+use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketCreatedMother;
+use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketDescribedMother;
+use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketResolvedMother;
+use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketTitleChangedMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketDescriptionMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketIdMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketMother;
@@ -53,6 +65,31 @@ class TicketTest extends TestCase
         $this->assertEquals($expectedCreatedAt, $ticket->createdAt());
     }
 
+    public function testCreation_HaveAllRequiredValues_TicketCreatedEventRaised(): void
+    {
+        // arrange
+        $id = TicketIdMother::createDefault();
+        $title = TicketTitleMother::createDefault();
+        $description = TicketDescriptionMother::createDefault();
+        $categoryId = CategoryIdMother::createDefault();
+        $authorId = UserIdMother::createDefault();
+        $createdAtAsString = '2020-01-01 10:00:01';
+        FakeCalendar::setFakeDate($createdAtAsString);
+
+        // act
+        $ticket = TicketMother::create(
+            $id,
+            $title,
+            $description,
+            $categoryId,
+            $authorId
+        );
+
+        // assert
+        $expectedRaisedEvent = TicketCreatedMother::create($id, $title, $description, $categoryId, $authorId);
+        $this->assertEventRaised($expectedRaisedEvent, $ticket);
+    }
+
     public function testClose_TicketHasResolvedStatusAndCannotBeChangedToClosed_ThrownException(): void
     {
         // arrange
@@ -77,6 +114,37 @@ class TicketTest extends TestCase
         // assert
         $expectedStatus = TicketStatus::closed();
         $this->assertEquals($expectedStatus, $status);
+    }
+
+    public function testClose_HaveAlreadyClosedTicket_TicketClosedEventNotRaised(): void
+    {
+        // arrange
+        $ticket = TicketMother::createClosed();
+        $ticket->popRaisedEvents(); // clear raised events
+
+        // act
+        $ticket->close();
+
+        // assert
+        $this->assertEventNotRaised(TicketClosed::class, $ticket);
+    }
+
+    public function testClose_HaveOpenTicket_TicketClosedEventRaised(): void
+    {
+        // arrange
+        $id = TicketIdMother::createDefault();
+        $ticket = TicketMother::createWithParams([
+            'id' => $id
+        ]);
+        $occurredOnAsString = '2020-01-01 10:00:06';
+        FakeCalendar::setFakeDate($occurredOnAsString);
+
+        // act
+        $ticket->close();
+
+        // assert
+        $expectedRaisedEvent = TicketClosedMother::create($id);
+        $this->assertEventRaised($expectedRaisedEvent, $ticket);
     }
 
     public function testChangeTitle_TicketIsClosedAndTitleCannotBeChanged_ThrownException(): void
@@ -119,6 +187,43 @@ class TicketTest extends TestCase
         $this->assertEquals($expectedNewTitle, $newTitle);
     }
 
+    public function testChangeTitle_HaveSameOldAndNewTitle_TitleChangedEventNotRaised(): void
+    {
+        // arrange
+        $oldTitle = TicketTitleMother::create('Old title');
+        $ticket = TicketMother::createWithParams([
+            'title' => $oldTitle
+        ]);
+        $newTitle = TicketTitleMother::create('Old title');
+
+        // act
+        $ticket->changeTitle($newTitle);
+
+        // assert
+        $this->assertEventNotRaised(TicketTitleChanged::class, $ticket);
+    }
+
+    public function testChangeTitle_HaveNewTitle_TitleChangedEventRaised(): void
+    {
+        // arrange
+        $id = TicketIdMother::createDefault();
+        $oldTitle = TicketTitleMother::create('Old title');
+        $ticket = TicketMother::createWithParams([
+            'id' => $id,
+            'title' => $oldTitle
+        ]);
+        $newTitle = TicketTitleMother::create('New title');
+        $occurredOnAsString = '2020-01-01 10:00:06';
+        FakeCalendar::setFakeDate($occurredOnAsString);
+
+        // act
+        $ticket->changeTitle($newTitle);
+
+        // assert
+        $expectedRaisedEvent = TicketTitleChangedMother::create($id, $newTitle);
+        $this->assertEventRaised($expectedRaisedEvent, $ticket);
+    }
+
     public function testDescribe_TicketIsClosedAndDescriptionCannotBeChanged_ThrownException(): void
     {
         // arrange
@@ -157,6 +262,43 @@ class TicketTest extends TestCase
 
         // assert
         $this->assertEquals($expectedNewDescription, $newDescription);
+    }
+
+    public function testDescribe_HaveSameOldAndNewDescription_TicketDescribedEventNotRaised(): void
+    {
+        // arrange
+        $oldDescription = TicketDescriptionMother::create('Old description');
+        $ticket = TicketMother::createWithParams([
+            'description' => $oldDescription
+        ]);
+        $newDescription = TicketDescriptionMother::create('Old description');
+
+        // act
+        $ticket->describe($newDescription);
+
+        // assert
+        $this->assertEventNotRaised(TicketDescribed::class, $ticket);
+    }
+
+    public function testDescribe_HaveNewDescription_TicketDescribedEventRaised(): void
+    {
+        // arrange
+        $id = TicketIdMother::createDefault();
+        $oldDescription = TicketDescriptionMother::create('Old description');
+        $ticket = TicketMother::createWithParams([
+            'id' => $id,
+            'description' => $oldDescription
+        ]);
+        $newDescription = TicketDescriptionMother::create('New description');
+        $occurredOnAsString = '2020-01-01 10:00:06';
+        FakeCalendar::setFakeDate($occurredOnAsString);
+
+        // act
+        $ticket->describe($newDescription);
+
+        // assert
+        $expectedRaisedEvent = TicketDescribedMother::create($id, $newDescription);
+        $this->assertEventRaised($expectedRaisedEvent, $ticket);
     }
 
     public function testChangeCategory_TicketIsClosedAndCategoryCannotBeChanged_ThrownException(): void
@@ -199,6 +341,43 @@ class TicketTest extends TestCase
         $this->assertEquals($expectedNewCategory, $newCategory);
     }
 
+    public function testChangeCategory_HaveSameOldAndNewCategory_TicketCategoryChangedEventNotRaised(): void
+    {
+        // arrange
+        $oldCategoryId = CategoryIdMother::create('ID-CATEGORY-0');
+        $ticket = TicketMother::createWithParams([
+            'category_id' => $oldCategoryId
+        ]);
+        $newCategoryId = CategoryIdMother::create('ID-CATEGORY-0');
+
+        // act
+        $ticket->changeCategory($newCategoryId);
+
+        // assert
+        $this->assertEventNotRaised(TicketCategoryChanged::class, $ticket);
+    }
+
+    public function testChangeCategory_HaveNewCategory_TicketCategoryChangedEventRaised(): void
+    {
+        // arrange
+        $id = TicketIdMother::createDefault();
+        $oldCategoryId = CategoryIdMother::create('ID-CATEGORY-0');
+        $ticket = TicketMother::createWithParams([
+            'id' => $id,
+            'category_id' => $oldCategoryId
+        ]);
+        $newCategoryId = CategoryIdMother::create('ID-CATEGORY-1');
+        $occurredOnAsString = '2020-01-01 10:00:06';
+        FakeCalendar::setFakeDate($occurredOnAsString);
+
+        // act
+        $ticket->changeCategory($newCategoryId);
+
+        // assert
+        $expectedRaisedEvent = TicketCategoryChangedMother::create($id, $newCategoryId);
+        $this->assertEventRaised($expectedRaisedEvent, $ticket);
+    }
+
     public function testResolve_HaveOpenTicket_TicketStatusHasBeenChangedToResolve(): void
     {
         // arrange
@@ -213,16 +392,35 @@ class TicketTest extends TestCase
         $this->assertEquals($expectedStatus, $status);
     }
 
-    public function testResolve_HaveAlreadyResolvedTicket_ThrownException(): void
+    public function testResolve_HaveAlreadyResolvedTicket_TicketResolvedEventNotRaised(): void
     {
         // arrange
         $ticket = TicketMother::createResolved();
-
-        // assert
-        $this->expectException(TicketIsAlreadyResolved::class);
+        $ticket->popRaisedEvents(); // clean raised events
 
         // act
         $ticket->resolve();
+
+        // assert
+        $this->assertEventNotRaised(TicketResolved::class, $ticket);
+    }
+
+    public function testResolve_HaveOpenTicket_TicketResolvedEventRaised(): void
+    {
+        // arrange
+        $id = TicketIdMother::createDefault();
+        $ticket = TicketMother::createWithParams([
+            'id' => $id
+        ]);
+        $occurredOnAsString = '2020-01-01 10:00:06';
+        FakeCalendar::setFakeDate($occurredOnAsString);
+
+        // act
+        $ticket->resolve();
+
+        // assert
+        $expectedRaisedEvent = TicketResolvedMother::create($id);
+        $this->assertEventRaised($expectedRaisedEvent, $ticket);
     }
 
     public function testAddComment_TicketIsClosedAndCommentCannotBeAdded_ThrownException(): void
@@ -288,6 +486,32 @@ class TicketTest extends TestCase
         $this->assertEquals($expectedTicketId, $ticketId);
         $expectedCreatedAt = new \DateTimeImmutable('2020-01-01 15:45:05');
         $this->assertEquals($expectedCreatedAt, $createdAt);
+    }
+
+    private function assertEventRaised(DomainEvent $expectedEvent, Ticket $ticket): void
+    {
+        $eventRaised = false;
+        foreach ($ticket->popRaisedEvents() as $raisedEvent) {
+            if ($expectedEvent == $raisedEvent) {
+                $eventRaised = true;
+                break;
+            }
+        }
+
+        $this->assertTrue($eventRaised);
+    }
+
+    private function assertEventNotRaised(string $eventClass, Ticket $ticket): void
+    {
+        $eventRaised = false;
+        foreach ($ticket->popRaisedEvents() as $raisedEvent) {
+            if (get_class($raisedEvent) === $eventClass) {
+                $eventRaised = true;
+                break;
+            }
+        }
+
+        $this->assertFalse($eventRaised);
     }
 
     public function tearDown(): void

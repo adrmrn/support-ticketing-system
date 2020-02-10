@@ -70,4 +70,30 @@ class TicketDescriptionTest extends TestCase
         // act
         TicketDescriptionMother::create($invalidDescription);
     }
+
+    public function testEquals_HaveTwoSameDescriptions_ReturnsTrue(): void
+    {
+        // arrange
+        $descriptionOne = TicketDescriptionMother::create('Same description');
+        $descriptionTwo = TicketDescriptionMother::create('Same description');
+
+        // act
+        $equals = $descriptionOne->equals($descriptionTwo);
+
+        // assert
+        $this->assertTrue($equals);
+    }
+
+    public function testEquals_HaveTwoDifferentDescriptions_ReturnsFalse(): void
+    {
+        // arrange
+        $descriptionOne = TicketDescriptionMother::create('Description one');
+        $descriptionTwo = TicketDescriptionMother::create('Description two');
+
+        // act
+        $equals = $descriptionOne->equals($descriptionTwo);
+
+        // assert
+        $this->assertFalse($equals);
+    }
 }

@@ -70,4 +70,30 @@ class TicketTitleTest extends TestCase
         // act
         TicketTitleMother::create($invalidTitle);
     }
+
+    public function testEquals_HaveTwoSameTitles_ReturnsTrue(): void
+    {
+        // arrange
+        $titleOne = TicketTitleMother::create('Same title');
+        $titleTwo = TicketTitleMother::create('Same title');
+
+        // act
+        $equals = $titleOne->equals($titleTwo);
+
+        // assert
+        $this->assertTrue($equals);
+    }
+
+    public function testEquals_HaveTwoDifferentNames_ReturnsFalse(): void
+    {
+        // arrange
+        $titleOne = TicketTitleMother::create('Title one');
+        $titleTwo = TicketTitleMother::create('Title two');
+
+        // act
+        $equals = $titleOne->equals($titleTwo);
+
+        // assert
+        $this->assertFalse($equals);
+    }
 }
