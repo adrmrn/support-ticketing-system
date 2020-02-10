@@ -75,6 +75,24 @@ services:
             - method: register
               arguments:
                   - '@Ticket\Infrastructure\Projection\MongoDb\Category\CategoryRemovedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Ticket\TicketCreatedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Ticket\TicketCategoryChangedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Ticket\TicketDescribedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Ticket\TicketTitleChangedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Ticket\TicketResolvedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Ticket\TicketClosedProjection'
 
     Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient:
         arguments:
