@@ -30,6 +30,12 @@ class MongoDbClient
         $collection->updateOne($filters, ['$set' => $data]);
     }
 
+    public function push(string $collectionName, array $filters, array $data): void
+    {
+        $collection = $this->collection($collectionName);
+        $collection->updateOne($filters, ['$push' => $data]);
+    }
+
     public function find(string $collectionName, array $filters = [], array $options = []): array
     {
         $collection = $this->collection($collectionName);

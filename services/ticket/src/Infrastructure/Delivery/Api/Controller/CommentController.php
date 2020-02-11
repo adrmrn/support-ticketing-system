@@ -13,6 +13,7 @@ use Ticket\Application\UseCase\EditComment\EditCommentCommand;
 use Ticket\Application\UseCase\RemoveComment\RemoveCommentCommand;
 use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\AddCommentValidator;
+use Ticket\Infrastructure\Delivery\Api\Request\Validator\EditCommentValidator;
 
 class CommentController extends AbstractController
 {
@@ -44,7 +45,7 @@ class CommentController extends AbstractController
 
     public function editComment(string $commentId, Request $request): JsonResponse
     {
-        $validator = new AddCommentValidator($request);
+        $validator = new EditCommentValidator($request);
         if (!$validator->isValid()) {
             throw ValidationException::withErrors($validator->errors());
         }

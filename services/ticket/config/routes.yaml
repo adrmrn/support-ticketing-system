@@ -40,7 +40,7 @@ addComment:
 
 editComment:
     path: /api/comment/{commentId}
-    methods: POST
+    methods: PUT
     controller: Ticket\Infrastructure\Delivery\Api\Controller\CommentController::editComment
 
 removeComment:

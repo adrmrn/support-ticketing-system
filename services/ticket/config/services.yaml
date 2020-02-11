@@ -93,6 +93,12 @@ services:
             - method: register
               arguments:
                   - '@Ticket\Infrastructure\Projection\MongoDb\Ticket\TicketClosedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Comment\CommentCreatedProjection'
+            - method: register
+              arguments:
+                  - '@Ticket\Infrastructure\Projection\MongoDb\Comment\CommentContentEditedProjection'
 
     Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient:
         arguments:
