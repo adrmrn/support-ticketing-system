@@ -8,6 +8,8 @@ use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Ticket\Domain\Category\Category;
 use Ticket\Domain\Category\Event\CategoryRemoved;
+use Ticket\Domain\Comment\Comment;
+use Ticket\Domain\Comment\Event\CommentRemoved;
 use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Event\DomainEventDispatcher;
 use Ticket\Shared\Domain\Aggregate;
@@ -40,6 +42,8 @@ final class DoctrineDomainEventCollector implements EventSubscriber
         $entity = $args->getObject();
         if ($entity instanceof Category) {
             $this->raisedEvents[] = new CategoryRemoved($entity->id());
+        } elseif ($entity instanceof Comment) {
+            $this->raisedEvents[] = new CommentRemoved($entity->id());
         }
     }
 
