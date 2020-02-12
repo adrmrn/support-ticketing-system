@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Domain\Ticket;
 
-use PHPUnit\Framework\TestCase;
-use Ticket\Domain\Event\DomainEvent;
+use Ticket\Tests\Support\TestCase;
 use Ticket\Domain\Exception\LockedTicketCannotBeChanged;
 use Ticket\Domain\Exception\ResolvedTicketCannotBeClosed;
 use Ticket\Domain\Ticket\Event\TicketCategoryChanged;
@@ -12,7 +11,6 @@ use Ticket\Domain\Ticket\Event\TicketClosed;
 use Ticket\Domain\Ticket\Event\TicketDescribed;
 use Ticket\Domain\Ticket\Event\TicketResolved;
 use Ticket\Domain\Ticket\Event\TicketTitleChanged;
-use Ticket\Domain\Ticket\Ticket;
 use Ticket\Domain\Ticket\TicketStatus;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\DateTimeMother;
@@ -494,38 +492,5 @@ class TicketTest extends TestCase
         $this->assertEquals($expectedTicketId, $ticketId);
         $expectedCreatedAt = new \DateTimeImmutable('2020-01-01 15:45:05');
         $this->assertEquals($expectedCreatedAt, $createdAt);
-    }
-
-    private function assertEventRaised(DomainEvent $expectedEvent, Ticket $ticket): void
-    {
-        $eventRaised = false;
-        foreach ($ticket->popRaisedEvents() as $raisedEvent) {
-            if ($expectedEvent == $raisedEvent) {
-                $eventRaised = true;
-                break;
-            }
-        }
-
-        $this->assertTrue($eventRaised);
-    }
-
-    private function assertEventNotRaised(string $eventClass, Ticket $ticket): void
-    {
-        $eventRaised = false;
-        foreach ($ticket->popRaisedEvents() as $raisedEvent) {
-            if (get_class($raisedEvent) === $eventClass) {
-                $eventRaised = true;
-                break;
-            }
-        }
-
-        $this->assertFalse($eventRaised);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        FakeCalendar::destroy();
     }
 }

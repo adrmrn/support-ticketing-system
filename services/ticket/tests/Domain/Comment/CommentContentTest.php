@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Domain\Comment;
 
-use PHPUnit\Framework\TestCase;
+use Ticket\Tests\Support\TestCase;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\CommentContentMother;
 
 class CommentContentTest extends TestCase

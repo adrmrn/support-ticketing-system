@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Domain\Comment\Event;
 
-use PHPUnit\Framework\TestCase;
+use Ticket\Tests\Support\TestCase;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\CommentContentMother;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\CommentIdMother;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\Event\CommentContentEditedMother;
-use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketIdMother;
 
 class CommentContentEditedTest extends TestCase
 {
@@ -93,12 +92,5 @@ class CommentContentEditedTest extends TestCase
             "content": "Comment content"
         }';
         $this->assertJsonStringEqualsJsonString($expectedDataAsJson, $dataAsJson);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        FakeCalendar::destroy();
     }
 }

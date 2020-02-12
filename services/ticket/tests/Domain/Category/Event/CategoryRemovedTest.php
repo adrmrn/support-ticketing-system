@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Domain\Category\Event;
 
-use PHPUnit\Framework\TestCase;
+use Ticket\Tests\Support\TestCase;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\Domain\Category\CategoryIdMother;
 use Ticket\Tests\Support\MotherObject\Domain\Category\Event\CategoryRemovedMother;
@@ -85,12 +85,5 @@ class CategoryRemovedTest extends TestCase
             "id": "ID-CATEGORY-0"
         }';
         $this->assertJsonStringEqualsJsonString($expectedDataAsJson, $dataAsJson);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        FakeCalendar::destroy();
     }
 }

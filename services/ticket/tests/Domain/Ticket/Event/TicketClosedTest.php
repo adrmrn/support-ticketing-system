@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Domain\Ticket\Event;
 
-use PHPUnit\Framework\TestCase;
+use Ticket\Tests\Support\TestCase;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\Event\TicketClosedMother;
 use Ticket\Tests\Support\MotherObject\Domain\Ticket\TicketIdMother;
@@ -85,12 +85,5 @@ class TicketClosedTest extends TestCase
             "id": "ID-TICKET-0"
         }';
         $this->assertJsonStringEqualsJsonString($expectedDataAsJson, $dataAsJson);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        FakeCalendar::destroy();
     }
 }

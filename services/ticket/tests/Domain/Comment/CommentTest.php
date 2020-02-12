@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Domain\Comment;
 
-use PHPUnit\Framework\TestCase;
-use Ticket\Domain\Comment\Comment;
+use Ticket\Tests\Support\TestCase;
 use Ticket\Domain\Comment\Event\CommentContentEdited;
-use Ticket\Domain\Event\DomainEvent;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\DateTimeMother;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\CommentContentMother;
@@ -120,38 +118,5 @@ class CommentTest extends TestCase
         // assert
         $expectedRaisedEvent = CommentContentEditedMother::create($id, $newContent);
         $this->assertEventRaised($expectedRaisedEvent, $comment);
-    }
-
-    private function assertEventRaised(DomainEvent $expectedEvent, Comment $comment): void
-    {
-        $eventRaised = false;
-        foreach ($comment->popRaisedEvents() as $raisedEvent) {
-            if ($expectedEvent == $raisedEvent) {
-                $eventRaised = true;
-                break;
-            }
-        }
-
-        $this->assertTrue($eventRaised);
-    }
-
-    private function assertEventNotRaised(string $eventClass, Comment $comment): void
-    {
-        $eventRaised = false;
-        foreach ($comment->popRaisedEvents() as $raisedEvent) {
-            if (get_class($raisedEvent) === $eventClass) {
-                $eventRaised = true;
-                break;
-            }
-        }
-
-        $this->assertFalse($eventRaised);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        FakeCalendar::destroy();
     }
 }

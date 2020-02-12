@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Domain\Comment\Event;
 
-use PHPUnit\Framework\TestCase;
+use Ticket\Tests\Support\TestCase;
 use Ticket\Tests\Support\Helpers\Shared\Domain\FakeCalendar;
 use Ticket\Tests\Support\MotherObject\DateTimeMother;
 use Ticket\Tests\Support\MotherObject\Domain\Comment\CommentContentMother;
@@ -113,12 +113,5 @@ class CommentCreatedTest extends TestCase
             "createdAt": "2020-01-01 10:00:50"
         }';
         $this->assertJsonStringEqualsJsonString($expectedDataAsJson, $dataAsJson);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        FakeCalendar::destroy();
     }
 }
