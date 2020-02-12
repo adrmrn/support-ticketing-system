@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace Ticket\Domain\Exception;
 
 use Throwable;
+use Ticket\Domain\DomainException;
 use Ticket\Domain\Ticket\TicketId;
 
-final class TicketNotFound extends \Exception
+final class TicketNotFound extends DomainException
 {
     private function __construct(string $message)
     {

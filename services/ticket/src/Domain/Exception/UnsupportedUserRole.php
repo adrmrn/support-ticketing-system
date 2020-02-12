@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Ticket\Domain\Exception;
 
-class UnsupportedUserRole extends \Exception
+use Ticket\Domain\DomainException;
+
+final class UnsupportedUserRole extends DomainException
 {
     private function __construct($message)
     {

@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Ticket\Domain\Exception;
 
 use Ticket\Domain\Category\CategoryId;
+use Ticket\Domain\DomainException;
 
-final class CategoryNotFound extends \Exception
+final class CategoryNotFound extends DomainException
 {
     private function __construct(string $message)
     {
