@@ -5,18 +5,10 @@ namespace Ticket\Infrastructure\Projection\MongoDb\Ticket;
 
 use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Ticket\Event\TicketTitleChanged;
-use Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient;
-use Ticket\Infrastructure\Projection\Projection;
+use Ticket\Infrastructure\Projection\MongoDb\MongoDbProjection;
 
-class TicketTitleChangedProjection implements Projection
+class TicketTitleChangedProjection extends MongoDbProjection
 {
-    private MongoDbClient $client;
-
-    public function __construct(MongoDbClient $client)
-    {
-        $this->client = $client;
-    }
-
     public function isListeningTo(DomainEvent $event): bool
     {
         return \get_class($event) === TicketTitleChanged::class;
@@ -24,7 +16,7 @@ class TicketTitleChangedProjection implements Projection
 
     public function project(DomainEvent $event): void
     {
-        $this->client->update(
+        $this->client()->update(
             'ticket',
             [
                 'id' => $event->aggregateId()

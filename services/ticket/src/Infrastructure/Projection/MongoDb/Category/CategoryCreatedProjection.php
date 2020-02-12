@@ -5,18 +5,10 @@ namespace Ticket\Infrastructure\Projection\MongoDb\Category;
 
 use Ticket\Domain\Category\Event\CategoryCreated;
 use Ticket\Domain\Event\DomainEvent;
-use Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient;
-use Ticket\Infrastructure\Projection\Projection;
+use Ticket\Infrastructure\Projection\MongoDb\MongoDbProjection;
 
-class CategoryCreatedProjection implements Projection
+class CategoryCreatedProjection extends MongoDbProjection
 {
-    private MongoDbClient $client;
-
-    public function __construct(MongoDbClient $client)
-    {
-        $this->client = $client;
-    }
-
     public function isListeningTo(DomainEvent $event): bool
     {
         return \get_class($event) === CategoryCreated::class;
@@ -24,7 +16,7 @@ class CategoryCreatedProjection implements Projection
 
     public function project(DomainEvent $event): void
     {
-        $this->client->save(
+        $this->client()->save(
             'category',
             [
                 'id' => $event->aggregateId(),

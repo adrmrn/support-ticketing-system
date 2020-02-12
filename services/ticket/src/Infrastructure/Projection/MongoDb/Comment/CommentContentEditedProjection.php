@@ -5,18 +5,10 @@ namespace Ticket\Infrastructure\Projection\MongoDb\Comment;
 
 use Ticket\Domain\Comment\Event\CommentContentEdited;
 use Ticket\Domain\Event\DomainEvent;
-use Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient;
-use Ticket\Infrastructure\Projection\Projection;
+use Ticket\Infrastructure\Projection\MongoDb\MongoDbProjection;
 
-class CommentContentEditedProjection implements Projection
+class CommentContentEditedProjection extends MongoDbProjection
 {
-    private MongoDbClient $client;
-
-    public function __construct(MongoDbClient $client)
-    {
-        $this->client = $client;
-    }
-
     public function isListeningTo(DomainEvent $event): bool
     {
         return \get_class($event) === CommentContentEdited::class;
@@ -24,7 +16,7 @@ class CommentContentEditedProjection implements Projection
 
     public function project(DomainEvent $event): void
     {
-        $this->client->update(
+        $this->client()->update(
             'ticket',
             [
                 'comments.id' => $event->aggregateId()
