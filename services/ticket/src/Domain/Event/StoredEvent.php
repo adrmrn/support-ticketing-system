@@ -12,7 +12,7 @@ class StoredEvent
      *
      * @var int
      */
-    private $eventId;
+    protected $eventId;
     private string $eventName;
     private string $aggregateId;
     private \DateTimeInterface $occurredOn;
