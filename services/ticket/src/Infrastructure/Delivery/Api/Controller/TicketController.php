@@ -61,7 +61,7 @@ class TicketController extends AbstractController
         );
         $this->commandBus->handle($command);
 
-        return new JsonResponse(null, 201);
+        return new JsonResponse(null, 200);
     }
 
     public function resolveTicket(string $ticketId): JsonResponse
