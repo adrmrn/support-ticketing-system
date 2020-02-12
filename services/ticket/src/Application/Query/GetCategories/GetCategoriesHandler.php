@@ -5,7 +5,7 @@ namespace Ticket\Application\Query\GetCategories;
 
 use Ticket\Domain\Category\CategoryView;
 use Ticket\Domain\Category\CategoryViewRepository;
-use Ticket\Shared\Application\Query\Handler;
+use Ticket\Application\Query\Handler;
 
 class GetCategoriesHandler implements Handler
 {

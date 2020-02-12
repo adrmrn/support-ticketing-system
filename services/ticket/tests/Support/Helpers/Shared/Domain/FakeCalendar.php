@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Ticket\Tests\Support\Helpers\Shared\Domain;
 
-use Ticket\Shared\Domain\Calendar;
-use Ticket\Shared\Domain\CalendarProvider;
+use Ticket\Domain\Calendar;
+use Ticket\Domain\CalendarProvider;
 
 class FakeCalendar extends Calendar
 {

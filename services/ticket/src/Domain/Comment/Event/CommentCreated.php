@@ -8,7 +8,7 @@ use Ticket\Domain\Comment\CommentId;
 use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Ticket\TicketId;
 use Ticket\Domain\User\UserId;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Calendar;
 
 class CommentCreated implements DomainEvent
 {

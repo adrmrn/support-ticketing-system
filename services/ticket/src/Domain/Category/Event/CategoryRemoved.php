@@ -5,7 +5,7 @@ namespace Ticket\Domain\Category\Event;
 
 use Ticket\Domain\Category\CategoryId;
 use Ticket\Domain\Event\DomainEvent;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Calendar;
 
 class CategoryRemoved implements DomainEvent
 {

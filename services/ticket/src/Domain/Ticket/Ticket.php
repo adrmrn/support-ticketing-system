@@ -16,8 +16,8 @@ use Ticket\Domain\Ticket\Event\TicketDescribed;
 use Ticket\Domain\Ticket\Event\TicketResolved;
 use Ticket\Domain\Ticket\Event\TicketTitleChanged;
 use Ticket\Domain\User\UserId;
-use Ticket\Shared\Domain\Aggregate;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Aggregate;
+use Ticket\Domain\Calendar;
 
 class Ticket extends Aggregate
 {

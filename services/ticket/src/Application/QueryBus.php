@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Ticket\Shared\Application;
+namespace Ticket\Application;
 
-use Ticket\Shared\Application\Query\Query;
+use Ticket\Application\Query\Query;
 
 interface QueryBus
 {

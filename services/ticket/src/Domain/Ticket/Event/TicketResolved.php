@@ -5,7 +5,7 @@ namespace Ticket\Domain\Ticket\Event;
 
 use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Ticket\TicketId;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Calendar;
 
 class TicketResolved implements DomainEvent
 {

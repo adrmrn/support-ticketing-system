@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ticket\Domain\Category;
 
-use Ticket\Shared\Domain\View;
+use Ticket\Domain\View;
 
 class CategoryView implements View
 {

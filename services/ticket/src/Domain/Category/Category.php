@@ -5,7 +5,7 @@ namespace Ticket\Domain\Category;
 
 use Ticket\Domain\Category\Event\CategoryCreated;
 use Ticket\Domain\Category\Event\CategoryNameChanged;
-use Ticket\Shared\Domain\Aggregate;
+use Ticket\Domain\Aggregate;
 
 class Category extends Aggregate
 {

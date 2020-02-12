@@ -12,7 +12,7 @@ use Ticket\Domain\Comment\Comment;
 use Ticket\Domain\Comment\Event\CommentRemoved;
 use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Event\DomainEventDispatcher;
-use Ticket\Shared\Domain\Aggregate;
+use Ticket\Domain\Aggregate;
 
 final class DoctrineDomainEventCollector implements EventSubscriber
 {

@@ -7,8 +7,8 @@ use Ticket\Domain\Comment\Event\CommentContentEdited;
 use Ticket\Domain\Comment\Event\CommentCreated;
 use Ticket\Domain\Ticket\TicketId;
 use Ticket\Domain\User\UserId;
-use Ticket\Shared\Domain\Aggregate;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Aggregate;
+use Ticket\Domain\Calendar;
 
 class Comment extends Aggregate
 {

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Ticket\Shared\Infrastructure\Application;
+namespace Ticket\Infrastructure\Application;
 
-use Ticket\Shared\Application\Query\Handler;
-use Ticket\Shared\Application\Query\Query;
-use Ticket\Shared\Application\QueryBus;
+use Ticket\Application\Query\Handler;
+use Ticket\Application\Query\Query;
+use Ticket\Application\QueryBus;
 
 class SimpleQueryBus implements QueryBus
 {

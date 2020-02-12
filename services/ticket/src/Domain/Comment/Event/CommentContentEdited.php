@@ -6,7 +6,7 @@ namespace Ticket\Domain\Comment\Event;
 use Ticket\Domain\Comment\CommentContent;
 use Ticket\Domain\Comment\CommentId;
 use Ticket\Domain\Event\DomainEvent;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Calendar;
 
 class CommentContentEdited implements DomainEvent
 {

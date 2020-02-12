@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ticket\Shared\Application\Query;
+namespace Ticket\Application\Query;
 
 interface Handler
 {

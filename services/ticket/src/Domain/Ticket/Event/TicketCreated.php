@@ -9,7 +9,7 @@ use Ticket\Domain\Ticket\TicketDescription;
 use Ticket\Domain\Ticket\TicketId;
 use Ticket\Domain\Ticket\TicketTitle;
 use Ticket\Domain\User\UserId;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Calendar;
 
 class TicketCreated implements DomainEvent
 {

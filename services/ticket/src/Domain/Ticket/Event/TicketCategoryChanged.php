@@ -6,7 +6,7 @@ namespace Ticket\Domain\Ticket\Event;
 use Ticket\Domain\Category\CategoryId;
 use Ticket\Domain\Event\DomainEvent;
 use Ticket\Domain\Ticket\TicketId;
-use Ticket\Shared\Domain\Calendar;
+use Ticket\Domain\Calendar;
 
 class TicketCategoryChanged implements DomainEvent
 {
