@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ticket\Tests\Domain\Event;
+namespace Ticket\Tests\Domain\Exception;
 
 use Ticket\Domain\DomainException;
 use Ticket\Domain\Exception\CommentNotFound;
