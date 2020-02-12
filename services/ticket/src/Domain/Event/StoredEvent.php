@@ -5,14 +5,7 @@ namespace Ticket\Domain\Event;
 
 class StoredEvent
 {
-    /**
-     * There is problem with Doctrine for PHP 7.4
-     * So I can't use typed property. Waiting for fix.
-     * "Typed property must not be accessed before initialization"
-     *
-     * @var int
-     */
-    protected $eventId;
+    protected int $eventId;
     private string $eventName;
     private string $aggregateId;
     private \DateTimeInterface $occurredOn;
