@@ -32,9 +32,11 @@ services:
             $uri: '%mongodb_url%'
             $uriOptions: { authSource: 'admin' }
 
-    Ticket\Infrastructure\Event\EventListener\Symfony\ExceptionListener:
+    Ticket\Infrastructure\Event\EventListener\Symfony\ExceptionSubscriber:
+        arguments:
+            $appEnv: '%env(string:APP_ENV)%'
         tags:
-            - { name: kernel.event_listener, event: kernel.exception }
+            - { name: kernel.event_subscriber }
 
     Ticket\Infrastructure\Delivery\Api\Controller\CategoryController:
         public: true

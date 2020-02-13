@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Ticket\Domain\Exception;
 
 use Ticket\Domain\Comment\CommentId;
-use Ticket\Domain\DomainException;
+use Ticket\Domain\NotFoundException;
 
-final class CommentNotFound extends DomainException
+final class CommentNotFound extends NotFoundException
 {
     private function __construct(string $message)
     {

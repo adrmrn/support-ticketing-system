@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Ticket\Domain\Exception;
 
-use Throwable;
-use Ticket\Domain\DomainException;
+use Ticket\Domain\NotFoundException;
 use Ticket\Domain\Ticket\TicketId;
 
-final class TicketNotFound extends DomainException
+final class TicketNotFound extends NotFoundException
 {
     private function __construct(string $message)
     {
