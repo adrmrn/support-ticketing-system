@@ -53,6 +53,19 @@ class MongoDbClient
         );
     }
 
+    public function findOne(string $collectionName, array $filters = [], array $options = []): ?array
+    {
+        $collection = $this->collection($collectionName);
+        $result = $collection->findOne($filters, $options);
+
+        if (\is_null($result)) {
+            return null;
+        }
+
+        /** @var BSONDocument $result */
+        return $result->getArrayCopy();
+    }
+
     public function delete(string $collectionName, array $filters = []): void
     {
         $collection = $this->collection($collectionName);

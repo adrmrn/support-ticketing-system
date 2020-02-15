@@ -38,6 +38,11 @@ getTickets:
     methods: GET
     controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::getTickets
 
+getTicket:
+    path: /api/ticket/{ticketId}
+    methods: GET
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::getTicket
+
 addComment:
     path: /api/comment
     methods: POST

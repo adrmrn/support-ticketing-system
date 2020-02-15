@@ -6,6 +6,7 @@ namespace Ticket\Infrastructure\Domain\Ticket;
 use MongoDB\Model\BSONDocument;
 use Ticket\Domain\Comment\CommentView;
 use Ticket\Domain\Criterion;
+use Ticket\Domain\Exception\TicketViewNotFound;
 use Ticket\Domain\Ticket\TicketView;
 use Ticket\Domain\Ticket\TicketViewRepository;
 use Ticket\Infrastructure\Persistence\MongoDb\MongoDbClient;
@@ -36,6 +37,26 @@ class MongoDbTicketViewRepository implements TicketViewRepository
         return array_map(function (array $ticketRawData) {
             return $this->createTicketView($ticketRawData);
         }, $ticketsRawData);
+    }
+
+    public function getById(string $ticketId, Criterion ...$criteria): TicketView
+    {
+        $filters = [];
+        foreach ($criteria as $criterion) {
+            $filters[$criterion->property()] = $criterion->value();
+        }
+
+        $filters['id'] = $ticketId;
+        $ticketRawData = $this->client->findOne(
+            'ticket',
+            $filters
+        );
+
+        if (\is_null($ticketRawData)) {
+            throw TicketViewNotFound::withTicketId($ticketId);
+        }
+
+        return $this->createTicketView($ticketRawData);
     }
 
     private function createTicketView(array $ticketRawData): TicketView

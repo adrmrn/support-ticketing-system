@@ -152,6 +152,10 @@ services:
               arguments:
                   - 'Ticket\Application\Query\GetTickets\GetTicketsQuery'
                   - '@Ticket\Application\Query\GetTickets\GetTicketsHandler'
+            - method: map
+              arguments:
+                  - 'Ticket\Application\Query\GetTicket\GetTicketQuery'
+                  - '@Ticket\Application\Query\GetTicket\GetTicketHandler'
 
     Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler:
         class: Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler
