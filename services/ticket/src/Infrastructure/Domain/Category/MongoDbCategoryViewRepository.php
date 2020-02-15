@@ -24,7 +24,6 @@ class MongoDbCategoryViewRepository implements CategoryViewRepository
     {
         $categoriesRawData = $this->client->find('category');
         $categories = [];
-        /** @var BSONDocument $categoryRawData */
         foreach ($categoriesRawData as $categoryRawData) {
             $categories[] = $this->createCategoryView($categoryRawData);
         }

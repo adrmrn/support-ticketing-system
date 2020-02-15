@@ -124,6 +124,9 @@ services:
     Ticket\Domain\Category\CategoryViewRepository:
         class: Ticket\Infrastructure\Domain\Category\MongoDbCategoryViewRepository
 
+    Ticket\Domain\Ticket\TicketViewRepository:
+        class: Ticket\Infrastructure\Domain\Ticket\MongoDbTicketViewRepository
+
     Ticket\Domain\Event\EventStore:
         class: Ticket\Infrastructure\Domain\Event\DoctrineEventStore
 
@@ -138,13 +141,17 @@ services:
 
     ########## APPLICATION ##########
 
-    Ticket\Shared\Application\QueryBus:
-        class: Ticket\Shared\Infrastructure\Application\SimpleQueryBus
+    Ticket\Application\QueryBus:
+        class: Ticket\Infrastructure\Application\SimpleQueryBus
         calls:
             - method: map
               arguments:
                   - 'Ticket\Application\Query\GetCategories\GetCategoriesQuery'
                   - '@Ticket\Application\Query\GetCategories\GetCategoriesHandler'
+            - method: map
+              arguments:
+                  - 'Ticket\Application\Query\GetTickets\GetTicketsQuery'
+                  - '@Ticket\Application\Query\GetTickets\GetTicketsHandler'
 
     Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler:
         class: Ticket\Application\UseCase\CreateCategory\CreateCategoryHandler

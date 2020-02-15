@@ -8,19 +8,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Ticket\Application\Exception\ValidationException;
+use Ticket\Application\Query\GetTickets\GetTicketsQuery;
+use Ticket\Application\QueryBus;
 use Ticket\Application\UseCase\CreateTicket\CreateTicketCommand;
 use Ticket\Application\UseCase\EditTicket\EditTicketCommand;
 use Ticket\Application\UseCase\ResolveTicket\ResolveTicketCommand;
+use Ticket\Domain\Ticket\TicketView;
 use Ticket\Infrastructure\Delivery\Api\Authenticator\AuthenticatedUser;
 use Ticket\Infrastructure\Delivery\Api\Request\Validator\CreateTicketValidator;
 
 class TicketController extends AbstractController
 {
     private CommandBus $commandBus;
+    private QueryBus $queryBus;
 
-    public function __construct(CommandBus $commandBus)
+    public function __construct(CommandBus $commandBus, QueryBus $queryBus)
     {
         $this->commandBus = $commandBus;
+        $this->queryBus = $queryBus;
     }
 
     public function createTicket(Request $request): JsonResponse
@@ -75,5 +80,18 @@ class TicketController extends AbstractController
         $this->commandBus->handle($command);
 
         return new JsonResponse(null, 200);
+    }
+
+    public function getTickets(): JsonResponse
+    {
+        /** @var AuthenticatedUser $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+        $query = new GetTicketsQuery($authenticatedUser);
+        $tickets = $this->queryBus->handle($query);
+
+        return new JsonResponse(
+            array_map(fn(TicketView $ticket) => $ticket->toArray(), $tickets),
+            200
+        );
     }
 }

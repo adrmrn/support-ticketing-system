@@ -33,6 +33,11 @@ resolveTicket:
     methods: PATCH
     controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::resolveTicket
 
+getTickets:
+    path: /api/ticket
+    methods: GET
+    controller: Ticket\Infrastructure\Delivery\Api\Controller\TicketController::getTickets
+
 addComment:
     path: /api/comment
     methods: POST
