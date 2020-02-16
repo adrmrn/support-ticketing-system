@@ -52,7 +52,10 @@ class CategoryController extends AbstractController
         $categories = $this->queryBus->handle($query);
 
         return new JsonResponse(
-            array_map(fn(CategoryView $category) => $category->toArray(), $categories),
+            array_map(
+                fn(CategoryView $category) => $category->toArray(),
+                $categories
+            ),
             200
         );
     }

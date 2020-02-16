@@ -92,7 +92,10 @@ class TicketController extends AbstractController
         $tickets = $this->queryBus->handle($query);
 
         return new JsonResponse(
-            array_map(fn(TicketView $ticket) => $ticket->toArray(), $tickets),
+            array_map(
+                fn(TicketView $ticket) => $ticket->toArray(),
+                $tickets
+            ),
             200
         );
     }

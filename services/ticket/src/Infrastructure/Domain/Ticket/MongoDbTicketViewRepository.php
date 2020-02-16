@@ -34,9 +34,10 @@ class MongoDbTicketViewRepository implements TicketViewRepository
             'ticket',
             $filters
         );
-        return array_map(function (array $ticketRawData) {
-            return $this->createTicketView($ticketRawData);
-        }, $ticketsRawData);
+        return array_map(
+            fn(array $ticketRawData) => $this->createTicketView($ticketRawData),
+            $ticketsRawData
+        );
     }
 
     public function getById(string $ticketId, Criterion ...$criteria): TicketView
