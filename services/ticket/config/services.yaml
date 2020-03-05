@@ -110,6 +110,10 @@ services:
             $client: '@MongoDB\Client'
             $database: '%mongodb_database%'
 
+    Ticket\Infrastructure\Cli\Command\CloseOverdueTicketsCommand:
+        tags:
+            - { name: 'console.command' }
+
     ########## DOMAIN ##########
 
     Ticket\Domain\Category\CategoryRepository:
@@ -126,6 +130,9 @@ services:
 
     Ticket\Domain\Ticket\TicketViewRepository:
         class: Ticket\Infrastructure\Domain\Ticket\MongoDbTicketViewRepository
+
+    Ticket\Domain\Service\FindOverdueTickets:
+        class: Ticket\Infrastructure\Domain\Service\MySqlFindOverdueTickets
 
     Ticket\Domain\Event\EventStore:
         class: Ticket\Infrastructure\Domain\Event\DoctrineEventStore
@@ -235,4 +242,12 @@ services:
             - {
                 name: tactician.handler,
                 command: Ticket\Application\UseCase\RemoveCategory\RemoveCategoryCommand
+            }
+
+    Ticket\Application\UseCase\CloseOverdueTickets\CloseOverdueTicketsHandler:
+        class: Ticket\Application\UseCase\CloseOverdueTickets\CloseOverdueTicketsHandler
+        tags:
+            - {
+                name: tactician.handler,
+                command: Ticket\Application\UseCase\CloseOverdueTickets\CloseOverdueTicketsCommand
             }

@@ -20,6 +20,12 @@ interface TicketRepository
     public function getById(TicketId $id): Ticket;
 
     /**
+     * @param TicketId ...$ids
+     * @return Ticket[]
+     */
+    public function getByIds(TicketId ...$ids): array;
+
+    /**
      * @param CategoryId $categoryId
      * @return Ticket[]
      */

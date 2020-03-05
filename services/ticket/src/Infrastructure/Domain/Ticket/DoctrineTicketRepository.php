@@ -47,6 +47,17 @@ class DoctrineTicketRepository implements TicketRepository
     }
 
     /**
+     * @param TicketId ...$ids
+     * @return Ticket[]
+     */
+    public function getByIds(TicketId ...$ids): array
+    {
+        return $this->repository->findBy([
+            'id' => $ids
+        ]);
+    }
+
+    /**
      * @param CategoryId $categoryId
      * @return Ticket[]
      */
