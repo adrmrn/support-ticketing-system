@@ -8,25 +8,19 @@
 # to apply, you may also create user-customizations.sh,
 # which will be run after this script.
 
-# If you're not quite ready for Node 12.x
-# Uncomment these lines to roll back to
-# v11.x or v10.x
-
-# Remove Node.js v12.x:
-#sudo apt-get -y purge nodejs
-#sudo rm -rf /usr/lib/node_modules/npm/lib
-#sudo rm -rf //etc/apt/sources.list.d/nodesource.list
-
-# Install Node.js v11.x
-#curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
-#sudo apt-get install -y nodejs
-
-# Install Node.js v10.x
-#curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-#sudo apt-get install -y nodejs
-
 # MongoDB
+sudo apt-get install php5.6-mongodb
+sudo apt-get install php7.0-mongodb
+sudo apt-get install php7.1-mongodb
+sudo apt-get install php7.2-mongodb
+sudo apt-get install php7.3-mongodb
 sudo apt-get install php7.4-mongodb
+sudo sh -c 'echo ";extension=mongodb.so" > /etc/php/5.6/mods-available/mongo.ini'
+sudo sh -c 'echo ";extension=mongodb.so" > /etc/php/7.0/mods-available/mongo.ini'
+sudo sh -c 'echo ";extension=mongodb.so" > /etc/php/7.1/mods-available/mongo.ini'
+sudo sh -c 'echo ";extension=mongodb.so" > /etc/php/7.2/mods-available/mongo.ini'
+sudo sh -c 'echo ";extension=mongodb.so" > /etc/php/7.3/mods-available/mongo.ini'
+sudo sh -c 'echo ";extension=mongodb.so" > /etc/php/7.4/mods-available/mongo.ini'
 
 # Migrations
 php /home/vagrant/support-ticketing-system/auth/artisan migrate
