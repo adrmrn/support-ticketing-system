@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ticket\Infrastructure\Cli\Command;
+namespace Ticket\Infrastructure\Delivery\Cli\Command;
 
 use League\Tactician\CommandBus;
 use Symfony\Component\Console\Command\Command;
