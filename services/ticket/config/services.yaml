@@ -110,7 +110,7 @@ services:
             $client: '@MongoDB\Client'
             $database: '%mongodb_database%'
 
-    Ticket\Infrastructure\Cli\Command\CloseOverdueTicketsCommand:
+    Ticket\Infrastructure\Delivery\Cli\Command\CloseOverdueTicketsCommand:
         tags:
             - { name: 'console.command' }
 
