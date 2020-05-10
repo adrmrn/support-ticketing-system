@@ -1,0 +1,701 @@
+{
+	"info": {
+		"_postman_id": "f7bdd662-d470-4f71-a164-6f379b34dae1",
+		"name": "Support Ticketing System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Log in: http://auth.sts.app/api/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a4533ea7-06c1-4ce8-8e89-70a7f92c7881",
+								"exec": [
+									"var token = JSON.parse(responseBody).token;",
+									"pm.globals.set(\"sts_token\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"johndoe@gmail.com\",\n\t\"password\": \"qwerty123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://auth.sts.app/api/login",
+							"protocol": "http",
+							"host": [
+								"auth",
+								"sts",
+								"app"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register user: http://user.sts.app/api/user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"John\",\n\t\"lastName\": \"Doe\",\n\t\"email\": \"johndoe@gmail.com\",\n\t\"password\": \"qwerty123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://user.sts.app/api/user",
+							"protocol": "http",
+							"host": [
+								"user",
+								"sts",
+								"app"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user: http://user.sts.app/api/user/{userId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{sts_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://user.sts.app/api/user/00000000-0000-0000-0000-000000000000",
+							"protocol": "http",
+							"host": [
+								"user",
+								"sts",
+								"app"
+							],
+							"path": [
+								"api",
+								"user",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RPC get user: http://user.sts.app/rpc/user/{userId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RPC-AUTH",
+								"type": "text",
+								"value": "m6dKMgAdn4VHyPKyqCCssFxnFVAvmmW6RAg4hhG4K4cJhnG7qJYgQV3Vg3Q2"
+							}
+						],
+						"url": {
+							"raw": "http://user.sts.app/rpc/user/00000000-0000-0000-0000-000000000000",
+							"protocol": "http",
+							"host": [
+								"user",
+								"sts",
+								"app"
+							],
+							"path": [
+								"rpc",
+								"user",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "Ticket",
+					"item": [
+						{
+							"name": "Create ticket: http://ticket.sts.app/api/ticket",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"Ticket title\",\n\t\"description\": \"Lorem ipsum...\",\n\t\"categoryId\": \"00000000-0000-0000-0000-000000000000\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/ticket",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"ticket"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit ticket: http://ticket.sts.app/api/ticket/{ticketId}",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"New ticket title\",\n\t\"description\": \"New description\",\n\t\"categoryId\": \"00000000-0000-0000-0000-000000000000\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/ticket/00000000-0000-0000-0000-000000000000",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"ticket",
+										"00000000-0000-0000-0000-000000000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Resolve ticket: http://ticket.sts.app/api/ticket/{ticketId}/resolve",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://ticket.sts.app/api/ticket/00000000-0000-0000-0000-000000000000/resolve",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"ticket",
+										"00000000-0000-0000-0000-000000000000",
+										"resolve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get tickets: http://ticket.sts.app/api/ticket",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://ticket.sts.app/api/ticket",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"ticket"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get ticket: http://ticket.sts.app/api/ticket",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://ticket.sts.app/api/ticket/00000000-0000-0000-0000-000000000000",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"ticket",
+										"00000000-0000-0000-0000-000000000000"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Create category: http://ticket.sts.app/api/category",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Category name\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/category",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit category: http://ticket.sts.app/api/category/{categoryId}",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"New categoy name\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/category/00000000-0000-0000-0000-000000000000",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"category",
+										"00000000-0000-0000-0000-000000000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove category: http://ticket.sts.app/api/category/{categoryId}",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/category/00000000-0000-0000-0000-000000000000",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"category",
+										"00000000-0000-0000-0000-000000000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get categories: http://ticket.sts.app/api/category",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://ticket.sts.app/api/category",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"category"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "Add comment: http://ticket.sts.app/api/comment",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"ticketId\": \"00000000-0000-0000-0000-000000000000\",\n\t\"content\": \"Comment content\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/comment",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"comment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove comment: http://ticket.sts.app/api/comment/{commentId}",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/comment/00000000-0000-0000-0000-000000000000",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"comment",
+										"00000000-0000-0000-0000-000000000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit comment: http://ticket.sts.app/api/comment/{commentId}",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sts_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"content\": \"New comment content\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ticket.sts.app/api/comment/00000000-0000-0000-0000-000000000000",
+									"protocol": "http",
+									"host": [
+										"ticket",
+										"sts",
+										"app"
+									],
+									"path": [
+										"api",
+										"comment",
+										"00000000-0000-0000-0000-000000000000"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6bc05ec7-5b79-47c3-b9ad-5f3ef404606e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4b8df9a5-99cd-4c70-8116-d6e03ae791f7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
