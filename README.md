@@ -5,7 +5,7 @@ STS is a project with three modules created as independent services with separat
 
 All is working together thanks to Vagrant (Homestead) environment. More information about a setup is available below.
 
-### Ticket microservice
+## Ticket microservice
 Ticket microservice is the core of whole application and is the most powerful as well. It contains most valuable business logic of the project. This microservice is responsible for managing tickets (create ticket/category, comment ticket, resolve/close ticket).
 
 Used technologies, libraries and approaches:
@@ -18,7 +18,7 @@ Used technologies, libraries and approaches:
 - CQRS & CommandBus (Tactician)
 - DDD
 
-### User microservice
+## User microservice
 With this microservice we can create a new user account. There are two types of accounts: 
 - Admin - can be created through CLI Command
 - Customer - can be created through API resource
@@ -32,7 +32,7 @@ Used technologies and libraries:
 - Doctrine ORM
 - RabbitMQ
 
-### Auth microservice
+## Auth microservice
 Auth microservice is responsible for authenticating users through API and generating JWT tokens. With JWT token, user can be authenticated in each microservice. 
 
 Auth module receives events about new user and saves account credentials in cache.
@@ -44,7 +44,7 @@ Used technologies and libraries:
 - Doctrine DBAL
 - RabbitMQ
 
-## Installation
+# Installation
 Requirements:
 - Composer
 - Vagrant
@@ -55,8 +55,8 @@ Requirements:
 3. Run command `composer install`
 4. Run command `vagrant up`
 
-## Postman resources
+# Postman resources
 There is a file in main project directory called `postman.json`. There are all API endpoints for STS app.
 
-## Feedback
+# Feedback
 Any feedback is welcomed. Just let me know if you have any ideas or have some questions.
