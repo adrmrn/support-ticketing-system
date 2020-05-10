@@ -5,7 +5,7 @@ namespace User\Core\Application\Exception;
 
 use Throwable;
 
-final class UserNotFound extends \Exception
+final class UserNotFound extends NotFoundException
 {
     public function __construct(string $message)
     {
